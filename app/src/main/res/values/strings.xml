@@ -1,3 +1,21 @@
 <resources>
     <string name="app_name">BudgetPlanner</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="auth_sign_up_username_len_err">The username must be greater than 8 or equal to 30</string>
+    <string name="auth_sign_up_username_invalid_err">Invalid username</string>
+    <string name="auth_sign_up_password_len_err">The password must be greater than 8 or equal to 22</string>
+    <string name="auth_sign_up_password_special_char_err">The password must have at least one special character</string>
+    <string name="auth_sign_up_password_alphabetic_char_err">The password must have at least one alphabetic character</string>
+    <string name="auth_sign_up_confirm_password_err">Does not match password</string>
+    <string name="auth_sign_up_sign_in_button">sign in</string>
+    <string name="auth_sing_up_title">Create your \naccount</string>
+    <string name="auth_sign_up_username_hint">Enter your email</string>
+    <string name="auth_sing_up_password_hint">Enter your password</string>
+    <string name="auth_sign_up_confirm_password_hint">Confirm password</string>
+    <string name="auth_sign_up_continue_button">continue</string>
+    <string name="auth_onboarding_last_name_hint">Last name</string>
+    <string name="auth_onboarding_first_name_hint">First name</string>
+    <string name="auth_onboarding_step_one_text">Step 1 of 2</string>
+    <string name="auth_onboarding_next_button">next</string>
 </resources>

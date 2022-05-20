@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.auth.register.onboarding.steps.one.OnboardingStepOneFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.endava.internship.mobile.budgetplanner.ui.auth.register.onboarding.steps.one.OnboardingStepOneViewModel" />
+        <variable
+            name="constants"
+            type="com.endava.internship.mobile.budgetplanner.util.validators.Constants" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="152dp"
+            android:layout_marginEnd="200dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/half_big_circle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="300dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="300dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="260dp"
+            android:layout_marginBottom="588dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/quarter_small_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_max="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_max="150dp" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sign_in_title_margin_start"
+            android:layout_marginTop="@dimen/sign_in_title_margin_top"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/sf_pro_text"
+            android:text="Let's get you\n started"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_big"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:theme="@style/TextInputLayoutOverlay"
+            app:error="@{viewModel.firstNameValidator.error}"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/auth_onboarding_first_name_hint"
+                android:inputType="textShortMessage"
+                android:maxLength="@{constants.MAX_FIRST_NAME_LEN}"
+                android:text="@={viewModel.firstName}"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            android:theme="@style/TextInputLayoutOverlay"
+            app:error="@{viewModel.lastNameValidator.error}"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_first_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_last_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:ems="10"
+                android:hint="@string/auth_onboarding_last_name_hint"
+                android:inputType="textShortMessage"
+                android:maxLength="@{constants.MAX_LAST_NAME_LEN}"
+                android:text="@={viewModel.lastName}"
+                android:textColor="@color/white" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/step_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tiny"
+            android:text="@string/auth_onboarding_step_one_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_last_name" />
+
+        <Button
+            android:id="@+id/next_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:backgroundTint="@null"
+            android:background="@drawable/action_button"
+            android:enabled="@{viewModel.isOboardingStepOneFormValidMediator}"
+            android:onClickListener="@{() -> viewModel.continueToStepTwo()}"
+            android:text="@string/auth_onboarding_next_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

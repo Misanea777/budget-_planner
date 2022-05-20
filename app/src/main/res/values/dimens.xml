@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="image_card_layout_constraint_width_max">175dp</dimen>
+    <dimen name="image_card_layout_constraint_height_max">118dp</dimen>
+    <dimen name="default_margin">30dp</dimen>
+
+    <dimen name="sign_in_button_margin_top">23dp</dimen>
+    <dimen name="sign_in_button_margin_end">27dp</dimen>
+
+    <dimen name="text_size_tiny">16sp</dimen>
+    <dimen name="text_size_small">20sp</dimen>
+    <dimen name="text_size_medium">30sp</dimen>
+    <dimen name="text_size_big">40sp</dimen>
+
+    <dimen name="sign_in_title_margin_top">92dp</dimen>
+    <dimen name="sign_in_title_margin_start">28dp</dimen>
+
+    <dimen name="sign_in_violet_card_img_margin_top">24dp</dimen>
+    <dimen name="sign_in_violet_card_img_margin_start">256dp</dimen>
+    <dimen name="sign_in_violet_card_img_elevation">-2dp</dimen>
+
+    <dimen name="sign_in_green_card_img_margin_top">264dp</dimen>
+    <dimen name="sign_in_green_card_img_margin_start">292dp</dimen>
+    <dimen name="sign_in_green_card_img_elevation">-1dp</dimen>
+    <dimen name="sign_in_green_card_img_rotation">-25</dimen>
+
+    <dimen name="sign_in_blue_card_img_margin_top">160dp</dimen>
+    <dimen name="sign_in_blue_card_img_margin_start">284dp</dimen>
+    <dimen name="sign_in_blue_card_img_elevation">-3dp</dimen>
+    <dimen name="sign_in_blue_card_img_rotation">15</dimen>
+</resources>

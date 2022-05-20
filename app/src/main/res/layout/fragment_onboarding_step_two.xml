@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.auth.register.onboarding.steps.two.OnboardingStepTwoFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.endava.internship.mobile.budgetplanner.ui.auth.register.onboarding.steps.two.OnboardingStepTwoViewModel" />
+        <variable
+            name="constants"
+            type="com.endava.internship.mobile.budgetplanner.util.validators.Constants" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="152dp"
+            android:layout_marginEnd="200dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/half_big_circle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_max="300dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="300dp" />
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="260dp"
+            android:layout_marginBottom="588dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/quarter_small_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_max="150dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_max="150dp" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sign_in_title_margin_start"
+            android:layout_marginTop="@dimen/sign_in_title_margin_top"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/sf_pro_text"
+            android:text="Let's get you\n started"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_big"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/initial_balance_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:text="Initial balance"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/role_spinner" />
+
+        <TextView
+            android:id="@+id/initial_balance_dollar_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:background="@android:color/transparent"
+            android:text="$"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_big"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/initial_balance_title" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/initial_balance_text"
+            android:theme="@style/TextInputLayoutOverlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:error="@{viewModel.initialBalanceValidator.error}"
+            app:layout_constraintStart_toEndOf="@+id/initial_balance_dollar_text"
+
+            app:layout_constraintTop_toBottomOf="@+id/initial_balance_title">
+
+            <EditText
+                android:id="@+id/initial_balance_edit_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.initialBalance}"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_big"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/step_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tiny"
+            android:text="Step 2 of 2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/initial_balance_text" />
+
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:backgroundTint="@null"
+            android:background="@drawable/action_button"
+            android:enabled="@{viewModel.isOboardingStepTwoFormValidMediator}"
+            android:onClickListener="@{() -> viewModel.signUp()}"
+            android:text="Sign up"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/step_text" />
+
+        <Spinner
+            android:id="@+id/role_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:selectedItemPosition="@={viewModel.industry}"
+            android:layout_marginTop="80dp"
+            android:backgroundTint="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
