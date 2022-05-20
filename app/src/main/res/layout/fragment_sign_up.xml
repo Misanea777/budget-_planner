@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.auth.register.sign_up.SignUpFragment">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.endava.internship.mobile.budgetplanner.ui.auth.register.sign_up.SignUpViewModel" />
+        <variable
+            name="constants"
+            type="com.endava.internship.mobile.budgetplanner.util.validators.Constants" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/sign_in_button_margin_top"
+            android:layout_marginEnd="@dimen/sign_in_button_margin_end"
+            android:fontFamily="@font/sf_pro_text"
+            android:text="@string/auth_sign_up_sign_in_button"
+            android:textAllCaps="false"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sign_in_title_margin_start"
+            android:layout_marginTop="@dimen/sign_in_title_margin_top"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/sf_pro_text"
+            android:text="@string/auth_sing_up_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_big"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/violet_card_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sign_in_violet_card_img_margin_start"
+            android:layout_marginTop="@dimen/sign_in_violet_card_img_margin_top"
+            android:background="@android:color/transparent"
+            android:elevation="@dimen/sign_in_violet_card_img_elevation"
+            android:src="@drawable/violet_platinum_card"
+            app:layout_constraintHeight_max="@dimen/image_card_layout_constraint_height_max"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            app:layout_constraintWidth_max="@dimen/image_card_layout_constraint_width_max" />
+
+        <ImageView
+            android:id="@+id/green_card_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sign_in_green_card_img_margin_start"
+            android:layout_marginTop="@dimen/sign_in_green_card_img_margin_top"
+            android:background="@android:color/transparent"
+            android:elevation="@dimen/sign_in_green_card_img_elevation"
+            android:rotation="@dimen/sign_in_green_card_img_rotation"
+            android:src="@drawable/green_platinum_card"
+            app:layout_constraintHeight_max="@dimen/image_card_layout_constraint_height_max"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="@dimen/image_card_layout_constraint_width_max" />
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/sign_in_blue_card_img_margin_start"
+            android:layout_marginTop="@dimen/sign_in_blue_card_img_margin_top"
+            android:background="@android:color/transparent"
+            android:elevation="@dimen/sign_in_blue_card_img_elevation"
+            android:rotation="@dimen/sign_in_blue_card_img_rotation"
+            android:src="@drawable/visa_card"
+            app:layout_constraintHeight_max="@dimen/image_card_layout_constraint_height_max"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_max="@dimen/image_card_layout_constraint_width_max" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_username"
+            android:theme="@style/TextInputLayoutOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:error="@{viewModel.usernameValidator.error}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/green_card_image">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:background="@android:color/transparent"
+                android:textColor="@color/white"
+                android:hint="@string/auth_sign_up_username_hint"
+                android:inputType="textShortMessage"
+                android:maxLength="@{constants.MAX_USERNAME_LEN}"
+                android:text="@={viewModel.username}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_password"
+            android:theme="@style/TextInputLayoutOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorEnabled="true"
+            app:error="@{viewModel.passwordValidator.error}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/input_username">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLength="@{constants.MAX_PASSWORD_LEN}"
+                android:background="@android:color/transparent"
+                android:textColor="@color/white"
+                android:text="@={viewModel.password}"
+                android:hint="@string/auth_sing_up_password_hint"
+                android:inputType="textPassword" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_confirm_password"
+            android:theme="@style/TextInputLayoutOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:error="@{viewModel.confirmPasswordValidator.error}"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/input_password">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edit_text_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLength="@{constants.MAX_PASSWORD_LEN}"
+                android:background="@android:color/transparent"
+                android:textColor="@color/white"
+                android:hint="@string/auth_sign_up_confirm_password_hint"
+                android:inputType="textPassword"
+                android:text="@={viewModel.confirmPassword}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/continue_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:backgroundTint="@null"
+            android:background="@drawable/action_button"
+            android:enabled="@{viewModel.isSignUpFormValidMediator}"
+            android:onClickListener="@{() -> viewModel.continueSignUpUser()}"
+            android:text="@string/auth_sign_up_continue_button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/input_confirm_password" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
