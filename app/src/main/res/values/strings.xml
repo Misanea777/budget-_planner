@@ -15,6 +15,8 @@
     <string name="auth_sign_up_confirm_password_hint">Confirm password</string>
     <string name="auth_sign_up_continue_button">continue</string>
 
+    <string name="auth_onboarding_step_one_title">Let’s get you\nstarted</string>
+
     <string name="auth_onboarding_last_name_hint">Last name</string>
     <string name="auth_onboarding_first_name_hint">First name</string>
     <string name="auth_onboarding_step_one_text">Step 1 of 2</string>
