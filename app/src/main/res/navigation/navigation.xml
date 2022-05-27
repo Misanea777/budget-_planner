@@ -13,9 +13,9 @@
         <action
             android:id="@+id/action_sign_up_fragment_to_onboarding_step_one_fragment"
             app:destination="@id/onboarding_step_one_fragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/sign_up_fragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@+id/sign_up_fragment"
+            app:popUpToInclusive="true"
+            app:popUpToSaveState="true" />
     </fragment>
     <fragment
         android:id="@+id/onboarding_step_one_fragment"
@@ -25,9 +25,8 @@
         <action
             android:id="@+id/action_onboarding_step_one_fragment_to_onboarding_step_two_fragment"
             app:destination="@id/onboarding_step_two_fragment"
-            app:launchSingleTop="true"
-            app:popUpTo="@id/sign_up_fragment"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/onboarding_step_one_fragment" />
         <argument
             android:name="userRegistrationInfo"
             app:argType="com.endava.internship.mobile.budgetplanner.data.model.UserRegistrationInfo"

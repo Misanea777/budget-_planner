@@ -40,12 +40,12 @@ class OnboardingStepTwoViewModel @Inject constructor(
 
     val initialBalance: MutableLiveData<String> = MutableLiveData<String>()
     val initialBalanceValidator = LiveDataValidator(initialBalance).apply {
-        addRule("Cannot be empty") {
+        addRule("Initial Amount is invalid") {
             it?.isNotEmpty() ?: false
         }
-        addRule("Must be less tha 10M") {
+        addRule("Initial Amount is invalid") {
             val asDouble = it?.toDoubleOrNull()
-            asDouble != null && asDouble < 10000000
+            asDouble != null && asDouble <= 10000000
         }
     }
 
