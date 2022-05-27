@@ -18,9 +18,9 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     val authRepository: AuthRepository,
     val resourceProvider: ResourceProvider
-) : ViewModel(){
+) : ViewModel() {
 
-    val statusMessage = MutableLiveData<String>()
+    val statusMessage = MutableLiveData<String?>()
 
     val userRegistrationInfo = UserRegistrationInfo()
 
@@ -88,19 +88,11 @@ class LoginViewModel @Inject constructor(
             )
         )
 
-        when(response) {
+        when (response) {
             is Resource.Success -> _isSignedIn.value = true
             is Resource.Failure -> {
-                val isNetworkError = response.isNetworkError
-                val message = response.message
-                when {
-                    isNetworkError && !message.isNullOrEmpty() -> statusMessage.value =
-                        message
-                    response.isNetworkError && response.message.isNullOrEmpty() -> statusMessage.value =
-                        resourceProvider.getStringRes(R.string.auth_sign_in_auth_request_timed_out_err)
-                    else -> statusMessage.value =
-                        resourceProvider.getStringRes(R.string.auth_sign_in_auth_request_timed_out_err)
-                }
+                statusMessage.value = response.message
+                    ?: resourceProvider.getStringRes(R.string.auth_sign_in_auth_request_timed_out_err)
             }
         }
 

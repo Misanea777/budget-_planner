@@ -52,7 +52,9 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage->
-            if(statusMessage.isNotBlank()) FailedAuthDialog(statusMessage).show(childFragmentManager, Constants.DialogTags.SIGN_IN_FAILED)
+            if (statusMessage != null) {
+                if(statusMessage.isNotBlank()) FailedAuthDialog(statusMessage).show(childFragmentManager, Constants.DialogTags.SIGN_IN_FAILED)
+            }
         }
     }
 }

@@ -19,14 +19,14 @@ suspend fun <T> safeApiCall(
                     val message: String? = throwable.response()?.errorBody()?.charStream()?.readText()
                         ?.let { JSONObject(it).optString(Constants.NETWORK_ERROR_RESPONSE_MSG) }
                     Resource.Failure(
-                        false,
+                        true,
                         throwable.code(),
                         throwable.response()?.errorBody(),
                         message
                     )
                 }
                 else -> {
-                    Resource.Failure(true, null, null, null)
+                    Resource.Failure(false, null, null, null)
                 }
             }
         }
