@@ -68,5 +68,9 @@ class OnboardingStepTwoFragment : Fragment() {
                 OnboardingStepTwoFragmentDirections.actionOnboardingStepTwoFragmentToWelcomeFragment()
             if (isSignedUp) findNavController().navigate(action)
         }
+
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 }

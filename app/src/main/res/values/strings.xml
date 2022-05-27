@@ -7,7 +7,7 @@
     <string name="auth_sign_up_password_len_err">The password must be greater than 8 or equal to 22</string>
     <string name="auth_sign_up_password_special_char_err">The password must have at least one special character</string>
     <string name="auth_sign_up_password_alphabetic_char_err">The password must have at least one alphabetic character</string>
-    <string name="auth_sign_up_confirm_password_err">Does not match password</string>
+    <string name="auth_sign_up_confirm_password_err">Passwords do not match</string>
     <string name="auth_sign_up_sign_in_button">sign in</string>
     <string name="auth_sing_up_title">Create your \naccount</string>
     <string name="auth_sign_up_username_hint">Enter your email</string>
@@ -18,4 +18,5 @@
     <string name="auth_onboarding_first_name_hint">First name</string>
     <string name="auth_onboarding_step_one_text">Step 1 of 2</string>
     <string name="auth_onboarding_next_button">next</string>
+    <string name="auth_onboarding_step_one_title">Let\'s get you\nstarted</string>
 </resources>

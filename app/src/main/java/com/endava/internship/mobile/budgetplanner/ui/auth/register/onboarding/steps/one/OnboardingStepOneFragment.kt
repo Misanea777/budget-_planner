@@ -48,6 +48,10 @@ class OnboardingStepOneFragment : Fragment() {
 
             if (isReadyToContinueToStepTwo) findNavController().navigate(action)
         }
+
+        binding.backButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
 }
