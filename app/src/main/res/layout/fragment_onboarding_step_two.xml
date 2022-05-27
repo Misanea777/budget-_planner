@@ -10,7 +10,7 @@
             type="com.endava.internship.mobile.budgetplanner.ui.auth.register.onboarding.steps.two.OnboardingStepTwoViewModel" />
         <variable
             name="constants"
-            type="com.endava.internship.mobile.budgetplanner.util.validators.Constants" />
+            type="com.endava.internship.mobile.budgetplanner.util.Constants" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

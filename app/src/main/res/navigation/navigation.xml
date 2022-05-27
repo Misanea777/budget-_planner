@@ -13,9 +13,12 @@
         <action
             android:id="@+id/action_sign_up_fragment_to_onboarding_step_one_fragment"
             app:destination="@id/onboarding_step_one_fragment"
-            app:popUpTo="@+id/sign_up_fragment"
-            app:popUpToInclusive="true"
-            app:popUpToSaveState="true" />
+            app:launchSingleTop="true"
+            app:popUpTo="@id/sign_up_fragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_sign_up_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
     </fragment>
     <fragment
         android:id="@+id/onboarding_step_one_fragment"
@@ -51,14 +54,35 @@
         android:id="@+id/welcome_fragment"
         android:name="com.endava.internship.mobile.budgetplanner.ui.auth.register.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" />
+        tools:layout="@layout/fragment_welcome" >
+        <action
+            android:id="@+id/action_welcome_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/splash_fragment"
         android:name="com.endava.internship.mobile.budgetplanner.ui.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash" >
         <action
-            android:id="@+id/action_splash_fragment_to_sign_up_fragment"
-            app:destination="@id/sign_up_fragment" />
+            android:id="@+id/action_splash_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.endava.internship.mobile.budgetplanner.ui.auth.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_fragment_to_sign_up_fragment"
+            app:destination="@id/sign_up_fragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/dashboard_fragment"
+        android:name="com.endava.internship.mobile.budgetplanner.ui.dashboard.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 </navigation>

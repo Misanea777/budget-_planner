@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.ui.auth.register.sign_up
+package com.endava.internship.mobile.budgetplanner.ui.auth.login
 
 import androidx.lifecycle.*
 import com.endava.internship.mobile.budgetplanner.R
@@ -15,88 +15,95 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
+class LoginViewModel @Inject constructor(
     val authRepository: AuthRepository,
     val resourceProvider: ResourceProvider
-) : ViewModel() {
+) : ViewModel(){
 
     val statusMessage = MutableLiveData<String>()
 
     val userRegistrationInfo = UserRegistrationInfo()
 
-    private val _isReadyToContinue: MutableLiveData<Boolean> = MutableLiveData()
-    val isReadyToContinue: LiveData<Boolean> = _isReadyToContinue
+    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _isSignedIn: MutableLiveData<Boolean> = MutableLiveData()
+    val isSignedIn: LiveData<Boolean> = _isSignedIn
 
     val username = MutableLiveData<String>()
     val usernameValidator = LiveDataValidator(username).apply {
-        addRule(resourceProvider.getStringRes(R.string.auth_sign_up_username_len_err)) {
+        addRule(resourceProvider.getStringRes(R.string.auth_sign_in_invalid_credentials_err)) {
             it?.lenInRange(Constants.MIN_PASSWORD_LEN..Constants.MAX_PASSWORD_LEN) ?: false
         }
-        addRule(resourceProvider.getStringRes(R.string.auth_sign_up_username_email_err)) {
+        addRule(resourceProvider.getStringRes(R.string.auth_sign_in_invalid_credentials_err)) {
             it?.isValidEmail() ?: false
         }
     }
 
     val password = MutableLiveData<String>()
     val passwordValidator = LiveDataValidator(password).apply {
-        addRule(resourceProvider.getStringRes(R.string.auth_sign_up_password_len_err)) {
+        addRule(resourceProvider.getStringRes(R.string.auth_sign_in_invalid_credentials_err)) {
             it?.lenInRange(Constants.MIN_PASSWORD_LEN..Constants.MAX_PASSWORD_LEN) ?: false
         }
-        addRule(resourceProvider.getStringRes(R.string.auth_sign_up_password_special_char_err)) {
+        addRule(resourceProvider.getStringRes(R.string.auth_sign_in_invalid_credentials_err)) {
             it?.hasMinimumOneSpecialChar() ?: false
         }
-        addRule(resourceProvider.getStringRes(R.string.auth_sign_up_password_alphabetic_char_err)) {
+        addRule(resourceProvider.getStringRes(R.string.auth_sign_in_invalid_credentials_err)) {
             it?.hasMinimumOneAlphabeticChar() ?: false
-        }
-    }
-
-    val confirmPassword = MutableLiveData<String>()
-    val confirmPasswordValidator = LiveDataValidator(confirmPassword).apply {
-        addRule(resourceProvider.getStringRes(R.string.auth_sign_up_confirm_password_err)) {
-            if (it == null) false else it == password.value
         }
     }
 
     val isSignUpFormValidMediator = MediatorLiveData<Boolean>()
 
     init {
-        _isReadyToContinue.value = false
+        _isSignedIn.value = false
         isSignUpFormValidMediator.value = false
         isSignUpFormValidMediator.addSource(username) { validateForm(isUsernameChanged = true) }
         isSignUpFormValidMediator.addSource(password) { validateForm(isPasswordChanged = true) }
-        isSignUpFormValidMediator.addSource(confirmPassword) { validateForm(isConfirmPasswordChanged = true) }
     }
 
     private fun validateForm(
         isUsernameChanged: Boolean = false,
         isPasswordChanged: Boolean = false,
-        isConfirmPasswordChanged: Boolean = false
     ) {
         val validators = listOf(
             Pair(usernameValidator, isUsernameChanged),
             Pair(passwordValidator, isPasswordChanged),
-            Pair(confirmPasswordValidator, isConfirmPasswordChanged)
         )
         val validatorResolver = LiveDataValidatorResolver(validators)
         isSignUpFormValidMediator.value = validatorResolver.isValid()
     }
 
-    fun continueSignUpUser() = viewModelScope.launch {
+    fun signInUser() = viewModelScope.launch {
+        _isLoading.value = true
         userRegistrationInfo.apply {
-            username = this@SignUpViewModel.username.value
-            password = this@SignUpViewModel.password.value
+            username = this@LoginViewModel.username.value
+            password = this@LoginViewModel.password.value
         }
 
-        val result = authRepository.validateUser(
+        val response = authRepository.login(
             BaseUser(
                 userRegistrationInfo.password,
                 userRegistrationInfo.username
             )
         )
 
-        when(result) {
-            is Resource.Success -> _isReadyToContinue.value = true
-            is Resource.Failure -> if(result.isNetworkError) result.message?.let { statusMessage.value = it }
+        when(response) {
+            is Resource.Success -> _isSignedIn.value = true
+            is Resource.Failure -> {
+                val isNetworkError = response.isNetworkError
+                val message = response.message
+                when {
+                    isNetworkError && !message.isNullOrEmpty() -> statusMessage.value =
+                        message
+                    response.isNetworkError && response.message.isNullOrEmpty() -> statusMessage.value =
+                        resourceProvider.getStringRes(R.string.auth_sign_in_auth_request_timed_out_err)
+                    else -> statusMessage.value =
+                        resourceProvider.getStringRes(R.string.auth_sign_in_auth_request_timed_out_err)
+                }
+            }
         }
+
+        _isLoading.value = false
     }
 }

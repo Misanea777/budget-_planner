@@ -2,12 +2,12 @@
 <layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.auth.register.sign_up.SignUpFragment">
+    tools:context=".ui.auth.login.LoginFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.endava.internship.mobile.budgetplanner.ui.auth.register.sign_up.SignUpViewModel" />
+            type="com.endava.internship.mobile.budgetplanner.ui.auth.login.LoginViewModel" />
         <variable
             name="constants"
             type="com.endava.internship.mobile.budgetplanner.util.Constants" />
@@ -18,14 +18,14 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/to_sign_in_button"
+            android:id="@+id/to_sign_up_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:layout_marginTop="@dimen/sign_in_button_margin_top"
             android:layout_marginEnd="@dimen/sign_in_button_margin_end"
             android:fontFamily="@font/sf_pro_text"
-            android:text="@string/auth_sign_up_sign_in_button"
+            android:text="@string/auth_sign_in_sign_up_button"
             android:textAllCaps="false"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +39,7 @@
             android:layout_marginTop="@dimen/sign_in_title_margin_top"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sf_pro_text"
-            android:text="@string/auth_sing_up_title"
+            android:text="@string/auth_sign_in_title"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_big"
             app:layout_constraintStart_toStartOf="parent"
@@ -108,7 +108,7 @@
                 android:ems="10"
                 android:background="@android:color/transparent"
                 android:textColor="@color/white"
-                android:hint="@string/auth_sign_up_username_hint"
+                android:hint="@string/auth_sign_in_username_hint"
                 android:inputType="textShortMessage"
                 android:maxLength="@{constants.MAX_USERNAME_LEN}"
                 android:text="@={viewModel.username}" />
@@ -124,8 +124,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="@dimen/default_margin"
-            app:layout_constraintTop_toBottomOf="@+id/input_username"
-            app:passwordToggleEnabled="true">
+            app:layout_constraintTop_toBottomOf="@+id/input_username">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_password"
@@ -136,60 +135,23 @@
                 android:background="@android:color/transparent"
                 android:textColor="@color/white"
                 android:text="@={viewModel.password}"
-                android:hint="@string/auth_sing_up_password_hint"
+                android:hint="@string/auth_sing_in_password_hint"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_confirm_password"
-            android:theme="@style/TextInputLayoutOverlay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:error="@{viewModel.confirmPasswordValidator.error}"
-            app:errorEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginHorizontal="@dimen/default_margin"
-            app:layout_constraintTop_toBottomOf="@+id/input_password"
-            app:passwordToggleEnabled="true">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/edit_text_confirm_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:maxLength="@{constants.MAX_PASSWORD_LEN}"
-                android:background="@android:color/transparent"
-                android:textColor="@color/white"
-                android:hint="@string/auth_sign_up_confirm_password_hint"
-                android:inputType="textPassword"
-                android:text="@={viewModel.confirmPassword}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <Button
-            android:id="@+id/continue_button"
+            android:id="@+id/sign_in_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginTop="@dimen/default_margin"
             app:backgroundTint="@null"
             android:background="@drawable/action_button"
             android:enabled="@{viewModel.isSignUpFormValidMediator}"
-            android:onClickListener="@{() -> viewModel.continueSignUpUser()}"
-            android:text="@string/auth_sign_up_continue_button"
+            android:onClickListener="@{() -> viewModel.signInUser()}"
+            android:text="@string/auth_sign_in_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/input_confirm_password" />
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.statusMessage}"
-            android:background="@android:color/transparent"
-            android:textColor="@android:color/holo_red_dark"
-            android:textSize="@dimen/text_size_tiny"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/continue_button" />
+            app:layout_constraintTop_toBottomOf="@+id/input_password" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

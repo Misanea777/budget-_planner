@@ -4,17 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
-import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentOnboardingStepOneBinding
-import com.endava.internship.mobile.budgetplanner.ui.auth.register.sign_up.SignUpFragmentDirections
-import com.endava.internship.mobile.budgetplanner.util.validators.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -53,5 +47,4 @@ class OnboardingStepOneFragment : Fragment() {
             findNavController().popBackStack()
         }
     }
-
 }

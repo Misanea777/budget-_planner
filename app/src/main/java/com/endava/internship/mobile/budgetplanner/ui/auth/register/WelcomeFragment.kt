@@ -23,7 +23,7 @@ class WelcomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.toSignInButton.setOnClickListener {
-//            findNavController().navigate(R.id.action_sign_up_fragment_to_onboarding_step_one_fragment)
+            findNavController().navigate(WelcomeFragmentDirections.actionWelcomeFragmentToLoginFragment())
         }
     }
 }

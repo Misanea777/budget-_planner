@@ -1,5 +1,6 @@
 package com.endava.internship.mobile.budgetplanner.network
 
+import com.endava.internship.mobile.budgetplanner.util.Constants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
@@ -15,9 +16,8 @@ suspend fun <T> safeApiCall(
         } catch (throwable: Throwable) {
             when (throwable) {
                 is HttpException -> {
-                    val message: String? = JSONObject(
-                        throwable.response()?.errorBody()!!.charStream().readText()
-                    ).optString("message")
+                    val message: String? = throwable.response()?.errorBody()?.charStream()?.readText()
+                        ?.let { JSONObject(it).optString(Constants.NETWORK_ERROR_RESPONSE_MSG) }
                     Resource.Failure(
                         false,
                         throwable.code(),

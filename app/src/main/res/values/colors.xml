@@ -16,4 +16,7 @@
     <color name="dark_purple">#1AC84FF7</color>
     <color name="dark_blue">#2E2853</color>
     <color name="light_purple">#7629F3</color>
+    <color name="quarter_transparent_black">#1E1E1E</color>
+    <color name="system_blue">#0A84FF</color>
+    <color name="grey">#545458</color>
 </resources>
