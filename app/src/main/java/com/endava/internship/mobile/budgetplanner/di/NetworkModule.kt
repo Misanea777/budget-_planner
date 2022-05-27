@@ -8,7 +8,7 @@ import com.endava.internship.mobile.budgetplanner.data.repository.DefaultAuthRep
 import com.endava.internship.mobile.budgetplanner.data.repository.DefaultIndustryRepository
 import com.endava.internship.mobile.budgetplanner.data.repository.IndustryRepository
 import com.endava.internship.mobile.budgetplanner.di.dispatchers.IoDispatcher
-import com.endava.internship.mobile.budgetplanner.util.validators.Constants
+import com.endava.internship.mobile.budgetplanner.util.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module

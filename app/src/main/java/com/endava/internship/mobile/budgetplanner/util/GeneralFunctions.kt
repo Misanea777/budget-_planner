@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.util.validators
+package com.endava.internship.mobile.budgetplanner.util
 
 import android.util.Patterns
 import java.util.regex.Pattern
@@ -21,3 +21,8 @@ fun areNotNull(vararg variables: Any?): Boolean =
 
 fun String.isValidEmail() =
     Patterns.EMAIL_ADDRESS.matcher(this).matches()
+
+fun String.isLessThan(number: Int): Boolean {
+    val asDouble = this.toDoubleOrNull()
+    return asDouble != null && asDouble < number
+}

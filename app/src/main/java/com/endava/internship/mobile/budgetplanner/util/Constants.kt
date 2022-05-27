@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.util.validators
+package com.endava.internship.mobile.budgetplanner.util
 
 import com.endava.internship.mobile.budgetplanner.BuildConfig
 
@@ -11,13 +11,20 @@ object Constants {
     const val MAX_USERNAME_LEN = 30
     const val MIN_PASSWORD_LEN = 8
     const val MAX_PASSWORD_LEN = 22
+    const val MAX_INITIAL_BALANCE = 10000000
+    const val MIN_INITIAL_BALANCE = 0.0
 
-    const val AUTH_FRAGMENT_REQUEST_KEY = "auth_request_key"
-    const val USER_REGISTRATION_INFO_KEY = "userRegistrationInfo"
+    const val NETWORK_ERROR_RESPONSE_MSG = "message"
 
     object ApiPaths {
         const val INDUSTRY_API_PATH: String = "industry"
         const val REGISTER_API_PATH: String = "registration"
+        const val REGISTER_VALIDATE_PATH: String = "$REGISTER_API_PATH/validate"
+    }
+
+    object DialogTags {
+        const val SIGN_IN_LOADING: String = "SIGN_IN_LOADING"
+        const val SIGN_IN_FAILED: String = "SIGN_IN_FAILED"
     }
 
     const val BASE_URL_RETROFIT_API: String = BuildConfig.WEATHER_API_URL

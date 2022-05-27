@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">BudgetPlanner</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_sign_up_username_len_err">The username must be greater than 8 or equal to 30</string>
+    <string name="auth_sign_up_username_email_err">Please enter a valid email address</string>
     <string name="auth_sign_up_username_invalid_err">Invalid username</string>
     <string name="auth_sign_up_password_len_err">The password must be greater than 8 or equal to 22</string>
     <string name="auth_sign_up_password_special_char_err">The password must have at least one special character</string>
@@ -14,9 +14,38 @@
     <string name="auth_sing_up_password_hint">Enter your password</string>
     <string name="auth_sign_up_confirm_password_hint">Confirm password</string>
     <string name="auth_sign_up_continue_button">continue</string>
+
     <string name="auth_onboarding_last_name_hint">Last name</string>
     <string name="auth_onboarding_first_name_hint">First name</string>
     <string name="auth_onboarding_step_one_text">Step 1 of 2</string>
     <string name="auth_onboarding_next_button">next</string>
-    <string name="auth_onboarding_step_one_title">Let\'s get you\nstarted</string>
+    <string name="auth_onboarding_step_one_first_name_len_err">The First name must be greater than 3 or equal to 22</string>
+    <string name="auth_onboarding_step_one_first_name_alpha_err">First name should contain only alpha characters</string>
+    <string name="auth_onboarding_step_one_last_name_len_err">The Last name must be greater than 3 or equal to 22</string>
+    <string name="auth_onboarding_step_one_last_name_alpha_err">Last name should contain only alpha characters</string>
+
+    <string name="auth_onboarding_step_two_initial_balance_empty_err">Last name should contain only alpha characters</string>
+    <string name="auth_onboarding_step_two_initial_balance_too_big_err">Last name should contain only alpha characters</string>
+
+    <string name="network_no_server_conn_err">"No connection to the server!"</string>
+    <string name="network_unknown_err">"Something went wrong!"</string>
+
+    <string name="auth_sign_in_invalid_credentials_err">Entered credentials are invalid!</string>
+    <string name="auth_sign_in_username_hint">Email</string>
+    <string name="auth_sing_in_password_hint">Password</string>
+    <string name="auth_sign_in_auth_request_timed_out_err">The request has timed out.</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="auth_sign_in_button">sign in</string>
+    <string name="auth_sign_in_title">Acces your\naccount</string>
+    <string name="auth_sign_in_sign_up_button">sign up</string>
+    <string name="auth_welcome_title">Welcome!</string>
+    <string name="auth_welcome_text">Welcome to the Budget Planner. Use the \"Sign In\" button below to start planning your budget</string>
+    <string name="auth_welcome_sign_in_button">sign in</string>
+    
+    <string name="auth_sign_in_failed_auth_dialog_action_button">Got it!</string>
+    <string name="auth_dialog_title">Authentication Failed!</string>
+    <string name="auth_dialog_got_it_button">Got it!</string>
+    <string name="loading_request_dialog_title">Please wait...</string>
+    <string name="loading_request_dialog_info_text">Your request is being processed.</string>
 </resources>

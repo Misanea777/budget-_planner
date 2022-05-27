@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.util.validators
+package com.endava.internship.mobile.budgetplanner.util
 
 import android.text.InputFilter
 import android.text.Spanned

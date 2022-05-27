@@ -25,7 +25,7 @@ class SplashFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val action = SplashFragmentDirections.actionSplashFragmentToSignUpFragment()
+        val action = SplashFragmentDirections.actionSplashFragmentToLoginFragment()
 
         splashViewModel.load()
         splashViewModel.isLoaded.observe(viewLifecycleOwner) { isLoaded->

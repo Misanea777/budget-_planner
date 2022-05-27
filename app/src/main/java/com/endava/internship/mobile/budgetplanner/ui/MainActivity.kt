@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
     }
 
-
     private fun hideSystemUI() {
         WindowCompat.setDecorFitsSystemWindows(window, false)
     }

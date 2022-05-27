@@ -4,14 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentSignUpBinding
-import com.endava.internship.mobile.budgetplanner.util.validators.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +28,10 @@ class SignUpFragment : Fragment() {
         binding.apply {
             viewModel = signUpViewModel
             lifecycleOwner = viewLifecycleOwner
+        }
+
+        binding.toSignInButton.setOnClickListener {
+            findNavController().navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
         }
 
         signUpViewModel.isReadyToContinue.observe(viewLifecycleOwner) { isReadyToContinue ->
