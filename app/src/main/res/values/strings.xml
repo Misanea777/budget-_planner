@@ -26,8 +26,7 @@
     <string name="auth_onboarding_step_one_last_name_len_err">The Last name must be greater than 3 or equal to 22</string>
     <string name="auth_onboarding_step_one_last_name_alpha_err">Last name should contain only alpha characters</string>
 
-    <string name="auth_onboarding_step_two_initial_balance_empty_err">Last name should contain only alpha characters</string>
-    <string name="auth_onboarding_step_two_initial_balance_too_big_err">Last name should contain only alpha characters</string>
+    <string name="auth_onboarding_step_two_initial_balance_invalid_err">Initial Amount is invalid</string>
 
     <string name="network_no_server_conn_err">"No connection to the server!"</string>
     <string name="network_unknown_err">"Something went wrong!"</string>
@@ -50,4 +49,7 @@
     <string name="auth_dialog_got_it_button">Got it!</string>
     <string name="loading_request_dialog_title">Please wait...</string>
     <string name="loading_request_dialog_info_text">Your request is being processed.</string>
+
+    <string name="error_general">Error</string>
+    <string name="error_unknown">Unknown error</string>
 </resources>

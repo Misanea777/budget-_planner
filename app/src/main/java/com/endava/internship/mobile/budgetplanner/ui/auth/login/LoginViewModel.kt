@@ -1,31 +1,28 @@
 package com.endava.internship.mobile.budgetplanner.ui.auth.login
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.data.model.BaseUser
 import com.endava.internship.mobile.budgetplanner.data.model.UserRegistrationInfo
 import com.endava.internship.mobile.budgetplanner.data.repository.AuthRepository
 import com.endava.internship.mobile.budgetplanner.network.Resource
 import com.endava.internship.mobile.budgetplanner.providers.ResourceProvider
+import com.endava.internship.mobile.budgetplanner.ui.base.BaseViewModel
 import com.endava.internship.mobile.budgetplanner.util.*
 import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataValidator
 import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataValidatorResolver
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     val authRepository: AuthRepository,
     val resourceProvider: ResourceProvider
-) : ViewModel() {
-
-    val statusMessage = MutableLiveData<String?>()
+) : BaseViewModel(resourceProvider) {
 
     val userRegistrationInfo = UserRegistrationInfo()
-
-    private val _isLoading: MutableLiveData<Boolean> = MutableLiveData()
-    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _isSignedIn: MutableLiveData<Boolean> = MutableLiveData()
     val isSignedIn: LiveData<Boolean> = _isSignedIn
@@ -74,8 +71,7 @@ class LoginViewModel @Inject constructor(
         isSignUpFormValidMediator.value = validatorResolver.isValid()
     }
 
-    fun signInUser() = viewModelScope.launch {
-        _isLoading.value = true
+    fun signInUser() = asyncExecute {
         userRegistrationInfo.apply {
             username = this@LoginViewModel.username.value
             password = this@LoginViewModel.password.value
@@ -90,12 +86,7 @@ class LoginViewModel @Inject constructor(
 
         when (response) {
             is Resource.Success -> _isSignedIn.value = true
-            is Resource.Failure -> {
-                statusMessage.value = response.message
-                    ?: resourceProvider.getStringRes(R.string.auth_sign_in_auth_request_timed_out_err)
-            }
+            is Resource.Failure -> pushStatusMessage(response.message)
         }
-
-        _isLoading.value = false
     }
 }

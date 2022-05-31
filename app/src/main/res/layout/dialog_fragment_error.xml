@@ -14,7 +14,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_small"
             android:background="@android:color/transparent"
-            android:text="@string/auth_dialog_title"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_tiny"
             app:layout_constraintEnd_toEndOf="parent"

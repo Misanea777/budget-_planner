@@ -22,7 +22,7 @@ fun areNotNull(vararg variables: Any?): Boolean =
 fun String.isValidEmail() =
     Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
-fun String.isLessThan(number: Int): Boolean {
+fun String.isLessOrEqualThan(number: Int): Boolean {
     val asDouble = this.toDoubleOrNull()
-    return asDouble != null && asDouble < number
+    return asDouble != null && asDouble <= number
 }

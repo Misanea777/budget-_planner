@@ -19,4 +19,6 @@
     <color name="quarter_transparent_black">#1E1E1E</color>
     <color name="system_blue">#0A84FF</color>
     <color name="grey">#545458</color>
+    <color name="light_grey">#6D6789</color>
+    <color name="light_blue">#342D5B</color>
 </resources>

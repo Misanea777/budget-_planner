@@ -15,16 +15,17 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/general_background_gradient">
 
         <ImageView
             android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="152dp"
-            android:layout_marginEnd="200dp"
+            android:layout_width="335dp"
+            android:layout_height="349dp"
+            android:layout_marginTop="180dp"
+            android:layout_marginEnd="256dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/half_big_circle"
+            android:src="@drawable/ic_ellipse_big"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHeight_max="300dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -32,12 +33,12 @@
 
         <ImageView
             android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="260dp"
-            android:layout_marginBottom="588dp"
+            android:layout_width="180dp"
+            android:layout_height="191dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginBottom="636dp"
             android:background="@android:color/transparent"
-            android:src="@drawable/quarter_small_circle"
+            android:src="@drawable/ic_ellipse_small"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_max="150dp"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,39 +64,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="Initial balance"
-            android:textColor="@color/white"
+            android:layout_marginVertical="@dimen/default_margin"
+            android:text="Initial amount"
+            android:textColor="@color/light_grey"
             android:textSize="@dimen/text_size_small"
             android:layout_marginHorizontal="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/role_spinner" />
-
-        <TextView
-            android:id="@+id/initial_balance_dollar_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="28dp"
-            android:layout_marginTop="28dp"
-            android:background="@android:color/transparent"
-            android:text="$"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_size_big"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/initial_balance_title" />
+            app:layout_constraintTop_toBottomOf="@+id/menu" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/initial_balance_text"
-            android:theme="@style/TextInputLayoutOverlay"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:errorEnabled="true"
+            app:boxBackgroundMode="none"
+            android:layout_marginStart="@dimen/margin_small"
+            android:layout_marginEnd="@dimen/default_margin"
+            android:theme="@style/TextInputLayoutOverlay"
             app:error="@{viewModel.initialBalanceValidator.error}"
-            app:layout_constraintStart_toEndOf="@+id/initial_balance_dollar_text"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/initial_balance_title"
+            app:prefixText="$"
+            app:prefixTextAppearance="@style/Prefix"
+            app:prefixTextColor="@color/white">
 
-            app:layout_constraintTop_toBottomOf="@+id/initial_balance_title">
-
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/initial_balance_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -103,7 +97,7 @@
                 android:inputType="numberDecimal"
                 android:text="@={viewModel.initialBalance}"
                 android:textColor="@color/white"
-                android:textSize="@dimen/text_size_big"/>
+                android:textSize="@dimen/text_size_big" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -113,6 +107,7 @@
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_tiny"
             android:text="Step 2 of 2"
+            android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -133,17 +128,30 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/step_text" />
 
-        <Spinner
-            android:id="@+id/role_spinner"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/menu"
+            android:theme="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/default_margin"
             android:layout_marginHorizontal="@dimen/default_margin"
-            android:selectedItemPosition="@={viewModel.industry}"
-            android:layout_marginTop="80dp"
-            android:backgroundTint="@color/white"
+            android:textColorHint="@color/white"
+            android:hint="My role is..."
+            app:endIconTint="@color/white"
+            app:endIconDrawable="@drawable/ic_drop_down_arrow"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/title_text" />
+            app:layout_constraintTop_toBottomOf="@+id/title_text" >
+
+            <AutoCompleteTextView
+                android:id="@+id/auto_complete_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/light_blue"
+                android:textColor="@color/white"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
             android:id="@+id/back_button"

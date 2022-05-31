@@ -4,15 +4,16 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.endava.internship.mobile.budgetplanner.R
-import com.endava.internship.mobile.budgetplanner.databinding.DialogFragmentFailedAuthBinding
+import com.endava.internship.mobile.budgetplanner.databinding.DialogFragmentErrorBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class FailedAuthDialog(val error: String) : DialogFragment() {
+class ErrorDialog(private val title: String, val error: String) : DialogFragment() {
 
-    lateinit var binding: DialogFragmentFailedAuthBinding
+    lateinit var binding: DialogFragmentErrorBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogFragmentFailedAuthBinding.inflate(layoutInflater)
+        binding = DialogFragmentErrorBinding.inflate(layoutInflater)
+        binding.titleText.text = title
         binding.errorText.text = error
 
         val dialog = MaterialAlertDialogBuilder(
