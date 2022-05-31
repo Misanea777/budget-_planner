@@ -1,33 +1,18 @@
 package com.endava.internship.mobile.budgetplanner.ui.auth.login
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentLoginBinding
-import com.endava.internship.mobile.budgetplanner.ui.dialogs.FailedAuthDialog
-import com.endava.internship.mobile.budgetplanner.ui.dialogs.LoadingRequestDialog
-import com.endava.internship.mobile.budgetplanner.util.Constants
+import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class LoginFragment : Fragment() {
+class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::inflate) {
 
-    lateinit var binding: FragmentLoginBinding
     private val loginViewModel by viewModels<LoginViewModel>()
-
-    private val loadingRequestDialog = LoadingRequestDialog()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLoginBinding.inflate(layoutInflater)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
@@ -44,17 +29,17 @@ class LoginFragment : Fragment() {
         }
 
         loginViewModel.isSignedIn.observe(viewLifecycleOwner) { isSignedIn ->
-            if(isSignedIn) findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToDashboardFragment())
+            if (isSignedIn) findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToDashboardFragment())
+        }
+
+        loginViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
+            statusMessage.getContentIfNotHandled()?.let {
+                showErrorDialog(this.getString(R.string.auth_dialog_title), it)
+            }
         }
 
         loginViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if(isLoading) loadingRequestDialog.show(childFragmentManager, Constants.DialogTags.SIGN_IN_LOADING) else loadingRequestDialog.dismiss()
-        }
-
-        loginViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage->
-            if (statusMessage != null) {
-                if(statusMessage.isNotBlank()) FailedAuthDialog(statusMessage).show(childFragmentManager, Constants.DialogTags.SIGN_IN_FAILED)
-            }
+            loadingDialogSetVisible(isLoading)
         }
     }
 }

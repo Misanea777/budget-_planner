@@ -24,7 +24,7 @@ class OnboardingStepOneFragment : Fragment() {
     ): View {
         binding = FragmentOnboardingStepOneBinding.inflate(layoutInflater)
 
-        args.userRegistrationInfo?.let { onboardingStepOneViewModel.userRegistrationInfo = it }
+        args.userRegistrationInfo?.let { onboardingStepOneViewModel.setData(it) }
 
         return binding.root
     }
@@ -44,7 +44,11 @@ class OnboardingStepOneFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
+            onboardingStepOneViewModel.saveData()
+            val action = OnboardingStepOneFragmentDirections.actionOnboardingStepOneFragmentToSignUpFragment(
+                onboardingStepOneViewModel.userRegistrationInfo
+            )
+            findNavController().navigate(action)
         }
     }
 }

@@ -1,28 +1,28 @@
 package com.endava.internship.mobile.budgetplanner.ui.auth.register.sign_up
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.data.model.BaseUser
 import com.endava.internship.mobile.budgetplanner.data.model.UserRegistrationInfo
 import com.endava.internship.mobile.budgetplanner.data.repository.AuthRepository
 import com.endava.internship.mobile.budgetplanner.network.Resource
 import com.endava.internship.mobile.budgetplanner.providers.ResourceProvider
+import com.endava.internship.mobile.budgetplanner.ui.base.BaseViewModel
 import com.endava.internship.mobile.budgetplanner.util.*
 import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataValidator
 import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataValidatorResolver
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
     val authRepository: AuthRepository,
     val resourceProvider: ResourceProvider
-) : ViewModel() {
+) : BaseViewModel(resourceProvider) {
 
-    val statusMessage = MutableLiveData<String>()
-
-    val userRegistrationInfo = UserRegistrationInfo()
+    var userRegistrationInfo = UserRegistrationInfo()
 
     private val _isReadyToContinue: MutableLiveData<Boolean> = MutableLiveData()
     val isReadyToContinue: LiveData<Boolean> = _isReadyToContinue
@@ -81,11 +81,8 @@ class SignUpViewModel @Inject constructor(
         isSignUpFormValidMediator.value = validatorResolver.isValid()
     }
 
-    fun continueSignUpUser() = viewModelScope.launch {
-        userRegistrationInfo.apply {
-            username = this@SignUpViewModel.username.value
-            password = this@SignUpViewModel.password.value
-        }
+    fun continueSignUpUser() = asyncExecute {
+        saveData()
 
         val result = authRepository.validateUser(
             BaseUser(
@@ -96,7 +93,23 @@ class SignUpViewModel @Inject constructor(
 
         when(result) {
             is Resource.Success -> _isReadyToContinue.value = true
-            is Resource.Failure -> if(result.isNetworkError) result.message?.let { statusMessage.value = it }
+            is Resource.Failure -> pushStatusMessage(result.message)
+        }
+    }
+
+    fun setData(data: UserRegistrationInfo) {
+        userRegistrationInfo = data
+        userRegistrationInfo.username?.let { username.value = it }
+        userRegistrationInfo.password?.let {
+            password.value = it
+            confirmPassword.value = it
+        }
+    }
+
+    fun saveData() {
+        userRegistrationInfo.apply {
+            username = this@SignUpViewModel.username.value
+            password = this@SignUpViewModel.password.value
         }
     }
 }

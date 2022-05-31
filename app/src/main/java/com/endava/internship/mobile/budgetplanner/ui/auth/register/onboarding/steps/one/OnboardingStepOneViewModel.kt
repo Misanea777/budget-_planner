@@ -68,11 +68,21 @@ class OnboardingStepOneViewModel @Inject constructor(
     }
 
     fun continueToStepTwo() {
+        saveData()
+
+        _isReadyToContinueToStepTwo.value = true
+    }
+
+    fun setData(data: UserRegistrationInfo) {
+        userRegistrationInfo = data
+        userRegistrationInfo.firstName?.let { firstName.value = it }
+        userRegistrationInfo.lastName?.let { lastName.value = it }
+    }
+
+    fun saveData() {
         userRegistrationInfo.apply {
             firstName = this@OnboardingStepOneViewModel.firstName.value
             lastName = this@OnboardingStepOneViewModel.lastName.value
         }
-
-        _isReadyToContinueToStepTwo.value = true
     }
 }

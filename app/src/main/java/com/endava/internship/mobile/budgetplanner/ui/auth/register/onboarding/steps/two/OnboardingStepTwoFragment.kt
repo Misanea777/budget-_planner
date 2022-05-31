@@ -5,31 +5,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
-import androidx.fragment.app.Fragment
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentOnboardingStepTwoBinding
+import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
 import com.endava.internship.mobile.budgetplanner.util.DecimalDigitsInputFilter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class OnboardingStepTwoFragment : Fragment() {
+class OnboardingStepTwoFragment : BaseFragment<FragmentOnboardingStepTwoBinding>(
+    FragmentOnboardingStepTwoBinding::inflate
+) {
 
-    lateinit var binding: FragmentOnboardingStepTwoBinding
     private val onboardingStepTwoViewModel by viewModels<OnboardingStepTwoViewModel>()
     private val args: OnboardingStepTwoFragmentArgs by navArgs()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentOnboardingStepTwoBinding.inflate(layoutInflater)
-
-        args.userRegistrationInfo?.let { onboardingStepTwoViewModel.userRegistrationInfo = it }
-
+        super.onCreateView(inflater, container, savedInstanceState)
+        args.userRegistrationInfo?.let { onboardingStepTwoViewModel.setData(it) }
         return binding.root
     }
 
@@ -43,19 +43,26 @@ class OnboardingStepTwoFragment : Fragment() {
 
         onboardingStepTwoViewModel.getIndustries()
 
+        initObservers()
+
+    }
+
+    private fun initObservers() {
         onboardingStepTwoViewModel.industries.observe(viewLifecycleOwner) { industries ->
-            val asList: MutableList<String> = industries.map { it.name }.toMutableList().apply {
-                add(0, "My role is..")
-            }
+            val asList: MutableList<String> = industries.map { it.name }.toMutableList()
 
             val adapter = ArrayAdapter(requireContext(), R.layout.role_spinner_item, asList)
-            binding.roleSpinner.adapter = adapter
+            (binding.menu.editText as? AutoCompleteTextView)?.setAdapter(adapter)
         }
 
         onboardingStepTwoViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
             statusMessage.getContentIfNotHandled()?.let {
-                Toast.makeText(this.context, it, Toast.LENGTH_LONG).show()
+                showErrorDialog(this.getString(R.string.error_general), it)
             }
+        }
+
+        onboardingStepTwoViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            loadingDialogSetVisible(isLoading)
         }
 
         onboardingStepTwoViewModel.isSignedUp.observe(viewLifecycleOwner) { isSignedUp ->
@@ -65,7 +72,21 @@ class OnboardingStepTwoFragment : Fragment() {
         }
 
         binding.backButton.setOnClickListener {
-            findNavController().popBackStack()
+            onboardingStepTwoViewModel.saveData()
+            val action =
+                OnboardingStepTwoFragmentDirections.actionOnboardingStepTwoFragmentToOnboardingStepOneFragment(
+                    onboardingStepTwoViewModel.userRegistrationInfo
+                )
+            findNavController().navigate(action)
         }
+
+        binding.autoCompleteTxt.setOnItemClickListener { _, _, position, _ ->
+            onboardingStepTwoViewModel.industry.value = position
+        }
+
+        binding.autoCompleteTxt.setText(
+            onboardingStepTwoViewModel.userRegistrationInfo.industry?.name,
+            false
+        )
     }
 }
