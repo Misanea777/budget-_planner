@@ -2,12 +2,12 @@ package com.endava.internship.mobile.budgetplanner.di
 
 import com.endava.internship.mobile.budgetplanner.BuildConfig
 import com.endava.internship.mobile.budgetplanner.data.remote.AuthApi
+import com.endava.internship.mobile.budgetplanner.data.remote.BalanceApi
 import com.endava.internship.mobile.budgetplanner.data.remote.IndustryApi
-import com.endava.internship.mobile.budgetplanner.data.repository.AuthRepository
-import com.endava.internship.mobile.budgetplanner.data.repository.DefaultAuthRepository
-import com.endava.internship.mobile.budgetplanner.data.repository.DefaultIndustryRepository
-import com.endava.internship.mobile.budgetplanner.data.repository.IndustryRepository
+import com.endava.internship.mobile.budgetplanner.data.remote.TransactionCategoryApi
+import com.endava.internship.mobile.budgetplanner.data.repository.*
 import com.endava.internship.mobile.budgetplanner.di.dispatchers.IoDispatcher
+import com.endava.internship.mobile.budgetplanner.network.AuthorizationInterceptor
 import com.endava.internship.mobile.budgetplanner.util.Constants
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -40,8 +40,10 @@ class NetworkModule {
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
     ) = OkHttpClient.Builder()
-        .apply { if (BuildConfig.DEBUG) addInterceptor(httpLoggingInterceptor) }
-        .build()
+        .apply {
+            if (BuildConfig.DEBUG) addInterceptor(httpLoggingInterceptor)
+            addInterceptor(AuthorizationInterceptor())
+        }.build()
 
     @Singleton
     @Provides
@@ -59,15 +61,33 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    fun provideTransactionCategoryService(retrofit: Retrofit): TransactionCategoryApi =
+        retrofit.create(TransactionCategoryApi::class.java)
+
+    @Singleton
+    @Provides
+    fun provideBalanceService(retrofit: Retrofit): BalanceApi =
+        retrofit.create(BalanceApi::class.java)
+
+    @Singleton
+    @Provides
     fun httpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Singleton
     @Provides
-    fun provideDefaultIndustryRepository(api: IndustryApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): IndustryRepository = DefaultIndustryRepository(api, ioDispatcher);
+    fun provideDefaultIndustryRepository(api: IndustryApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): IndustryRepository = DefaultIndustryRepository(api, ioDispatcher)
 
     @Singleton
     @Provides
-    fun provideDefaultAuthRepository(api: AuthApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): AuthRepository = DefaultAuthRepository(api, ioDispatcher);
+    fun provideDefaultAuthRepository(api: AuthApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): AuthRepository = DefaultAuthRepository(api, ioDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideDefaultTransactionCategoryRepository(api: TransactionCategoryApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): TransactionCategoryRepository = DefaultTransactionCategoryRepository(api, ioDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideDefaultBalanceRepository(api: BalanceApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): BalanceRepository = DefaultBalanceRepository(api, ioDispatcher)
 }

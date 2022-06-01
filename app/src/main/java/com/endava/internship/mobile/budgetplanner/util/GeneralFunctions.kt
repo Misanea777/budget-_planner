@@ -1,7 +1,12 @@
 package com.endava.internship.mobile.budgetplanner.util
 
 import android.util.Patterns
+import java.math.RoundingMode
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.util.regex.Pattern
+import kotlin.math.floor
+import kotlin.math.roundToInt
 
 fun String.isValidUsername() = Pattern.matches("^[A-Za-z0-9.@]{8,30}$", this)
 
@@ -26,3 +31,18 @@ fun String.isLessOrEqualThan(number: Int): Boolean {
     val asDouble = this.toDoubleOrNull()
     return asDouble != null && asDouble <= number
 }
+
+val formatter = DecimalFormat("##0.00").apply {
+    roundingMode = RoundingMode.DOWN
+}
+
+fun Double.toFancyNumberFormat(): String = when(floor(this).toInt()) {
+    in 0..999 -> formatter.format(this)
+    in 1000..999999 -> "${formatter.format(this / 1000)}k"
+    in 1000000..Int.MAX_VALUE -> "${formatter.format(this / 1000000)}m"
+    else -> this.toString()
+}
+
+fun String.asDollars(): String = "$$this"
+
+

@@ -43,7 +43,7 @@
     <string name="auth_welcome_title">Welcome!</string>
     <string name="auth_welcome_text">Welcome to the Budget Planner. Use the \"Sign In\" button below to start planning your budget</string>
     <string name="auth_welcome_sign_in_button">sign in</string>
-    
+
     <string name="auth_sign_in_failed_auth_dialog_action_button">Got it!</string>
     <string name="auth_dialog_title">Authentication Failed!</string>
     <string name="auth_dialog_got_it_button">Got it!</string>
