@@ -38,7 +38,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_sign_in_button">sign in</string>
-    <string name="auth_sign_in_title">Acces your\naccount</string>
+    <string name="auth_sign_in_title">Access your\naccount</string>
     <string name="auth_sign_in_sign_up_button">sign up</string>
     <string name="auth_welcome_title">Welcome!</string>
     <string name="auth_welcome_text">Welcome to the Budget Planner. Use the \"Sign In\" button below to start planning your budget</string>
