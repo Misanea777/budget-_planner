@@ -1,7 +1,10 @@
 package com.endava.internship.mobile.budgetplanner.util
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import com.endava.internship.mobile.budgetplanner.R
+import com.google.android.material.textfield.TextInputEditText
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -66,6 +69,22 @@ fun categoryIncomeIDToResourceID(id: Int): Int {
         4 -> R.drawable.ic_others
         else -> R.drawable.ic_others
     }
+}
+
+fun TextInputEditText.restrictWithoutSpaces() {
+    this.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+
+        override fun afterTextChanged(p0: Editable?) {
+            val textEntered = this@restrictWithoutSpaces.text.toString()
+
+            if (textEntered.isNotEmpty() && textEntered.contains(" ")) {
+                this@restrictWithoutSpaces.setText(this@restrictWithoutSpaces.text.toString().replace(" ", ""));
+                this@restrictWithoutSpaces.setSelection(this@restrictWithoutSpaces.text!!.length);
+            }
+        }})
 }
 
 

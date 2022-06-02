@@ -1,12 +1,15 @@
 package com.endava.internship.mobile.budgetplanner.ui.auth.login
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentLoginBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
+import com.endava.internship.mobile.budgetplanner.util.restrictWithoutSpaces
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,5 +44,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(FragmentLoginBinding::i
         loginViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             loadingDialogSetVisible(isLoading)
         }
+
+        binding.editTextUsername.restrictWithoutSpaces()
+
     }
 }
