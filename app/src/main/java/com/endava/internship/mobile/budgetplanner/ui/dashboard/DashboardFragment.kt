@@ -16,6 +16,8 @@ import com.endava.internship.mobile.budgetplanner.ui.dashboard.income.CardIncome
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.income.TransactionIncomeFragmentFragment
 import com.endava.internship.mobile.budgetplanner.util.asDollars
 import com.endava.internship.mobile.budgetplanner.util.toFancyNumberFormat
+import com.endava.internship.mobile.budgetplanner.util.toMinimalisticNumberFormat
+import com.endava.internship.mobile.budgetplanner.util.toTwoDecimalPlaces
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,7 +77,7 @@ class DashboardFragment :
         dashboardViewModel.getCurrentBalance()
 
         dashboardViewModel.balance.observe(viewLifecycleOwner) { balance ->
-            binding.balanceText.text = balance.toFancyNumberFormat().asDollars()
+            binding.balanceText.text = balance.toMinimalisticNumberFormat()
         }
     }
 
@@ -106,6 +108,14 @@ class DashboardFragment :
 
         dashboardViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             loadingDialogSetVisible(isLoading)
+        }
+
+        binding.balanceText.setOnClickListener {
+            showErrorDialog(
+                "${this.getString(R.string.dashboard_my_balance_title)}: ${
+                    dashboardViewModel.balance.value?.toTwoDecimalPlaces()?.asDollars()
+                }", ""
+            )
         }
     }
 }

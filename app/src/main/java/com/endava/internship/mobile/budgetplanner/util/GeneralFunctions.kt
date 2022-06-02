@@ -40,11 +40,22 @@ val formatter = DecimalFormat("##0.00").apply {
     roundingMode = RoundingMode.DOWN
 }
 
+fun Double.toTwoDecimalPlaces(): String = formatter.format(this)
+
 fun Double.toFancyNumberFormat(): String = when(floor(this).toInt()) {
     in 0..999 -> formatter.format(this)
     in 1000..999999 -> "${formatter.format(this / 1000)}k"
     in 1000000..Int.MAX_VALUE -> "${formatter.format(this / 1000000)}m"
     else -> this.toString()
+}
+
+fun Double.toMinimalisticNumberFormat(): String = when(floor(this).toInt()) {
+    in 0..999 -> "Less than 1K"
+    in 1000..1000 -> "1k"
+    in 1001..4999 -> "Less than 5K"
+    in 5000..5000 -> "5k"
+    in 5001..Int.MAX_VALUE -> "More than 5K"
+    else -> Double.toString()
 }
 
 fun String.asDollars(): String = "$$this"

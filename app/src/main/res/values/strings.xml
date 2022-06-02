@@ -56,6 +56,6 @@
 
     <string name="general_expenses_title">Expenses</string>
     <string name="general_income_title">Income</string>
-    <string name="dashboard_my_balance_title">My balance</string>
+    <string name="dashboard_my_balance_title">Total amount</string>
     <string name="dashboard_sing_out_button">Sign out</string>
 </resources>
