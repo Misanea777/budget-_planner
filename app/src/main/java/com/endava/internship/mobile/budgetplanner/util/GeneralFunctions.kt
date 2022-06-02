@@ -50,11 +50,11 @@ fun Double.toFancyNumberFormat(): String = when(floor(this).toInt()) {
 }
 
 fun Double.toMinimalisticNumberFormat(): String = when(floor(this).toInt()) {
-    in 0..999 -> "Less than 1K"
+    in 0..999 -> "Less than 1k"
     in 1000..1000 -> "1k"
-    in 1001..4999 -> "Less than 5K"
+    in 1001..4999 -> "Less than 5k"
     in 5000..5000 -> "5k"
-    in 5001..Int.MAX_VALUE -> "More than 5K"
+    in 5001..Int.MAX_VALUE -> "More than 5k"
     else -> Double.toString()
 }
 
