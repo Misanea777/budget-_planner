@@ -12,7 +12,7 @@
         android:layout_marginEnd="@dimen/dashboard_card_margin_end"
         android:layout_marginBottom="@dimen/dashboard_card_margin_bottom"
         android:background="@android:color/transparent"
-        android:text="-$2560.00"
+        android:text="-$2.56k"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_medium_small"
         android:textStyle="bold"
