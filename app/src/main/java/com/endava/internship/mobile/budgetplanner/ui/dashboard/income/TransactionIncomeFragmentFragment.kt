@@ -34,7 +34,7 @@ class TransactionIncomeFragmentFragment :
 
         incomeViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
             statusMessage.getContentIfNotHandled()?.let {
-                showErrorDialog(this.getString(R.string.auth_dialog_title), it)
+                showErrorDialog(this.getString(R.string.error_general), it)
             }
         }
 

@@ -22,7 +22,8 @@ class IncomeViewModel @Inject constructor(
     fun getCategories() = asyncExecute {
         val response = transactionCategoryRepository.getIncomeCategories()
         when (response) {
-            is Resource.Success -> _categories.value = response.value.map { TransactionModel(it.id, it.name, it.color) }
+            is Resource.Success -> _categories.value =
+                response.value.map { TransactionModel(it.id, it.name, it.color, false) }
             is Resource.Failure -> pushStatusMessage(response.message)
         }
     }

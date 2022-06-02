@@ -46,10 +46,16 @@
 
     <string name="auth_sign_in_failed_auth_dialog_action_button">Got it!</string>
     <string name="auth_dialog_title">Authentication Failed!</string>
+    <string name="auth_logout_dialog_title">Sign out Failed!</string>
     <string name="auth_dialog_got_it_button">Got it!</string>
     <string name="loading_request_dialog_title">Please wait...</string>
     <string name="loading_request_dialog_info_text">Your request is being processed.</string>
 
     <string name="error_general">Error</string>
     <string name="error_unknown">Unknown error</string>
+
+    <string name="general_expenses_title">Expenses</string>
+    <string name="general_income_title">Income</string>
+    <string name="dashboard_my_balance_title">My balance</string>
+    <string name="dashboard_sing_out_button">Sign out</string>
 </resources>

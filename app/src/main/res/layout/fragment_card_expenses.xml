@@ -12,10 +12,10 @@
         <include
             android:id="@+id/card_image"
             layout="@layout/card_expenses_default_item"
-            android:layout_width="302dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="52dp"
-            android:layout_marginEnd="120dp"
+            android:layout_width="@dimen/dashboard_card_width"
+            android:layout_height="@dimen/dashboard_card_height"
+            android:layout_marginTop="@dimen/dashboard_card_margin_final_top"
+            android:layout_marginEnd="@dimen/dashboard_card_margin_final_end"
             app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

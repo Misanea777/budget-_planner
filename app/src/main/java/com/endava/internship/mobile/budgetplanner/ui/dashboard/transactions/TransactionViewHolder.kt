@@ -8,7 +8,7 @@ class TransactionViewHolder(private val binding: TransactionCategoryItemBinding)
 
         fun bind(model: TransactionModel) {
             with(binding) {
-//                iconImage.setImageResource(model.icon)
+                iconImage.setImageResource(model.icon)
                 iconImage.background.colorFilter = model.getBackgroundColor()
                 titleText.text = model.name
             }

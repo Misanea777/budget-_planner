@@ -1,6 +1,7 @@
 package com.endava.internship.mobile.budgetplanner.util
 
 import android.util.Patterns
+import com.endava.internship.mobile.budgetplanner.R
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -44,5 +45,27 @@ fun Double.toFancyNumberFormat(): String = when(floor(this).toInt()) {
 }
 
 fun String.asDollars(): String = "$$this"
+
+fun categoryExpensesIDToResourceID(id: Int): Int {
+    return when (id) {
+        1 -> R.drawable.ic_food_drink
+        2 -> R.drawable.ic_entertainment
+        3 -> R.drawable.ic_taxes_payments
+        4 -> R.drawable.ic_shopping
+        5 -> R.drawable.ic_sports
+        6 -> R.drawable.ic_others
+        else -> R.drawable.ic_others
+    }
+}
+
+fun categoryIncomeIDToResourceID(id: Int): Int {
+    return when (id) {
+        1 -> R.drawable.ic_salaries_bonuses
+        2 -> R.drawable.ic_investments
+        3 -> R.drawable.ic_payments_transfers
+        4 -> R.drawable.ic_others
+        else -> R.drawable.ic_others
+    }
+}
 
 

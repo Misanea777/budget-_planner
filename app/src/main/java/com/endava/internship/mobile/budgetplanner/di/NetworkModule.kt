@@ -1,6 +1,7 @@
 package com.endava.internship.mobile.budgetplanner.di
 
 import com.endava.internship.mobile.budgetplanner.BuildConfig
+import com.endava.internship.mobile.budgetplanner.data.local.preferences.UserPreferences
 import com.endava.internship.mobile.budgetplanner.data.remote.AuthApi
 import com.endava.internship.mobile.budgetplanner.data.remote.BalanceApi
 import com.endava.internship.mobile.budgetplanner.data.remote.IndustryApi
@@ -38,11 +39,12 @@ class NetworkModule {
     @Singleton
     @Provides
     fun provideOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        authorizationInterceptor: AuthorizationInterceptor
     ) = OkHttpClient.Builder()
         .apply {
             if (BuildConfig.DEBUG) addInterceptor(httpLoggingInterceptor)
-            addInterceptor(AuthorizationInterceptor())
+            addInterceptor(authorizationInterceptor)
         }.build()
 
     @Singleton
@@ -77,17 +79,39 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideDefaultIndustryRepository(api: IndustryApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): IndustryRepository = DefaultIndustryRepository(api, ioDispatcher)
+    fun provideAuthInterceptor(
+        userPreferences: UserPreferences,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): AuthorizationInterceptor = AuthorizationInterceptor(userPreferences, ioDispatcher)
 
     @Singleton
     @Provides
-    fun provideDefaultAuthRepository(api: AuthApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): AuthRepository = DefaultAuthRepository(api, ioDispatcher)
+    fun provideDefaultIndustryRepository(
+        api: IndustryApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): IndustryRepository = DefaultIndustryRepository(api, ioDispatcher)
 
     @Singleton
     @Provides
-    fun provideDefaultTransactionCategoryRepository(api: TransactionCategoryApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): TransactionCategoryRepository = DefaultTransactionCategoryRepository(api, ioDispatcher)
+    fun provideDefaultAuthRepository(
+        api: AuthApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        userPreferences: UserPreferences,
+        authorizationInterceptor: AuthorizationInterceptor
+    ): AuthRepository =
+        DefaultAuthRepository(api, ioDispatcher, userPreferences, authorizationInterceptor)
 
     @Singleton
     @Provides
-    fun provideDefaultBalanceRepository(api: BalanceApi, @IoDispatcher ioDispatcher: CoroutineDispatcher): BalanceRepository = DefaultBalanceRepository(api, ioDispatcher)
+    fun provideDefaultTransactionCategoryRepository(
+        api: TransactionCategoryApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): TransactionCategoryRepository = DefaultTransactionCategoryRepository(api, ioDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideDefaultBalanceRepository(
+        api: BalanceApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): BalanceRepository = DefaultBalanceRepository(api, ioDispatcher)
 }

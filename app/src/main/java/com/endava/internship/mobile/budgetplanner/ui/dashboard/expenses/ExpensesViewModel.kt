@@ -22,7 +22,8 @@ class ExpensesViewModel @Inject constructor(
     fun getCategories() = asyncExecute {
         val response = transactionCategoryRepository.getExpenseCategories()
         when (response) {
-            is Resource.Success -> _categories.value = response.value.map { TransactionModel(it.id, it.name, it.color) }
+            is Resource.Success -> _categories.value =
+                response.value.map { TransactionModel(it.id, it.name, it.color, true) }
             is Resource.Failure -> pushStatusMessage(response.message)
         }
     }

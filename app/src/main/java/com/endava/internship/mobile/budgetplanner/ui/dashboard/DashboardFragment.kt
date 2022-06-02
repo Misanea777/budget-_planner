@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentDashboardBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.expenses.CardExpensesFragment
@@ -18,7 +20,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate) {
+class DashboardFragment :
+    BaseFragment<FragmentDashboardBinding>(FragmentDashboardBinding::inflate) {
 
     private val dashboardViewModel by viewModels<DashboardViewModel>()
 
@@ -59,7 +62,13 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val text = binding.root.findViewById<TextView>(R.id.card_image_text)
+
+        binding.apply {
+            viewModel = dashboardViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
+
+        initObservers()
 
         initTabLayout()
 
@@ -71,7 +80,10 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
     }
 
     private fun initTabLayout() {
-        val titles = arrayOf("Expenses", "Income")
+        val titles = arrayOf(
+            this.getString(R.string.general_expenses_title),
+            this.getString(R.string.general_income_title)
+        )
         val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, binding.cardViewPager) { tab, position ->
             tab.text = titles[position]
@@ -79,5 +91,21 @@ class DashboardFragment : BaseFragment<FragmentDashboardBinding>(FragmentDashboa
         TabLayoutMediator(tabLayout, binding.transactionsViewPager) { tab, position ->
             tab.text = titles[position]
         }.attach()
+    }
+
+    private fun initObservers() {
+        dashboardViewModel.isLoggedOut.observe(viewLifecycleOwner) { isLoggedOut ->
+            if (isLoggedOut) findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToLoginFragment())
+        }
+
+        dashboardViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
+            statusMessage.getContentIfNotHandled()?.let {
+                showErrorDialog(this.getString(R.string.error_general), it)
+            }
+        }
+
+        dashboardViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            loadingDialogSetVisible(isLoading)
+        }
     }
 }

@@ -11,6 +11,7 @@
     <dimen name="text_size_extremely_tiny">13sp</dimen>
     <dimen name="text_size_tiny">16sp</dimen>
     <dimen name="text_size_small">20sp</dimen>
+    <dimen name="text_size_medium_small">27sp</dimen>
     <dimen name="text_size_medium">30sp</dimen>
     <dimen name="text_size_big">40sp</dimen>
 
@@ -30,4 +31,12 @@
     <dimen name="sign_in_blue_card_img_margin_start">284dp</dimen>
     <dimen name="sign_in_blue_card_img_elevation">-3dp</dimen>
     <dimen name="sign_in_blue_card_img_rotation">15</dimen>
+
+    <dimen name="dashboard_card_margin_end">32dp</dimen>
+    <dimen name="dashboard_card_margin_bottom">44dp</dimen>
+
+    <dimen name="dashboard_card_width">302dp</dimen>
+    <dimen name="dashboard_card_height">200dp</dimen>
+    <dimen name="dashboard_card_margin_final_top">52dp</dimen>
+    <dimen name="dashboard_card_margin_final_end">120dp</dimen>
 </resources>

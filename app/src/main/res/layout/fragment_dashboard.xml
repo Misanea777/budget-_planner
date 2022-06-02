@@ -4,6 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.dashboard.DashboardFragment">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.endava.internship.mobile.budgetplanner.ui.dashboard.DashboardViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -14,8 +20,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:text="My balance"
+            android:text="@string/dashboard_my_balance_title"
             android:textColor="@color/white"
+            android:fontFamily="@font/sf_pro_text"
             android:textSize="@dimen/text_size_tiny"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +36,6 @@
             android:layout_marginStart="@dimen/default_margin"
             android:layout_marginTop="@dimen/default_margin"
             android:background="@android:color/transparent"
-            android:text="$26,129.00"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_small"
             android:textStyle="bold"
@@ -44,9 +50,10 @@
             android:layout_marginTop="@dimen/sign_in_button_margin_top"
             android:layout_marginEnd="@dimen/sign_in_button_margin_end"
             android:fontFamily="@font/sf_pro_text"
-            android:text="Sign out"
+            android:text="@string/dashboard_sing_out_button"
             android:textAllCaps="false"
             android:textSize="@dimen/text_size_tiny"
+            android:onClickListener="@{() -> viewModel.signOut()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,6 +84,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tab_layout" />
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_small"
+            android:background="@drawable/ic_add_item"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
