@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto" >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card_view:cardBackgroundColor="@android:color/transparent"
+        android:outlineSpotShadowColor="@android:color/transparent"
+        android:outlineAmbientShadowColor="@android:color/transparent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginBottom="@dimen/margin_small">
+
+            <ImageView
+                android:id="@+id/icon_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/ic_transaction_box"
+                card_view:srcCompat="@drawable/ic_food_drink" />
+
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@android:color/transparent"
+                card_view:layout_constraintBottom_toBottomOf="parent"
+                card_view:layout_constraintStart_toEndOf="@+id/icon_image"
+                card_view:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/title_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_small"
+                android:text="TextView"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_tiny"
+                android:textStyle="bold"
+                card_view:layout_constraintBottom_toTopOf="@+id/separator"
+                card_view:layout_constraintStart_toEndOf="@+id/icon_image" />
+
+            <TextView
+                android:id="@+id/transactions_text"
+                android:layout_marginStart="@dimen/margin_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 transactions"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_extremely_tiny"
+                card_view:layout_constraintStart_toEndOf="@+id/icon_image"
+                card_view:layout_constraintTop_toBottomOf="@+id/separator" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

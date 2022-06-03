@@ -122,6 +122,8 @@
             android:layout_height="wrap_content"
             app:errorEnabled="true"
             app:error="@{viewModel.passwordValidator.error}"
+            app:passwordToggleTint="@color/white"
+            app:passwordToggleEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginHorizontal="@dimen/default_margin"
