@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentSignUpBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
+import com.endava.internship.mobile.budgetplanner.util.restrictWithoutSpaces
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,5 +56,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding>(FragmentSignUpBinding
         signUpViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             loadingDialogSetVisible(isLoading)
         }
+
+        binding.editTextUsername.restrictWithoutSpaces()
     }
 }

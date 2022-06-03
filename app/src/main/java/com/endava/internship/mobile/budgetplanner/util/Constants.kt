@@ -20,6 +20,11 @@ object Constants {
         const val INDUSTRY_API_PATH: String = "industry"
         const val REGISTER_API_PATH: String = "registration"
         const val REGISTER_VALIDATE_PATH: String = "$REGISTER_API_PATH/validate"
+
+        const val TRANSACTION_EXPENSE_CATEGORY_PATH: String = "expense"
+        const val TRANSACTION_INCOME_CATEGORY_PATH: String = "income"
+
+        const val CURRENT_BALANCE_PATH: String = "dashboard"
     }
 
     object DialogTags {

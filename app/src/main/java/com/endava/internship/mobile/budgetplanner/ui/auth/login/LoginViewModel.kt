@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.endava.internship.mobile.budgetplanner.R
+import com.endava.internship.mobile.budgetplanner.data.local.preferences.UserPreferences
 import com.endava.internship.mobile.budgetplanner.data.model.BaseUser
 import com.endava.internship.mobile.budgetplanner.data.model.UserRegistrationInfo
 import com.endava.internship.mobile.budgetplanner.data.repository.AuthRepository
@@ -85,7 +86,10 @@ class LoginViewModel @Inject constructor(
         )
 
         when (response) {
-            is Resource.Success -> _isSignedIn.value = true
+            is Resource.Success -> {
+                authRepository.saveLoggedUser(response.value)
+                _isSignedIn.value = true
+            }
             is Resource.Failure -> pushStatusMessage(response.message)
         }
     }
