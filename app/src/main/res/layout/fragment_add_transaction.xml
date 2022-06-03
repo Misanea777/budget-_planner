@@ -83,7 +83,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
-            android:layout_marginTop="@dimen/default_margin"
             android:theme="@style/TextInputLayoutOverlay"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
@@ -113,14 +112,82 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_amount" />
 
-        <androidx.appcompat.widget.AppCompatToggleButton
+        <RadioGroup
+            android:id="@+id/transaction_type_radio_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/default_margin"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@drawable/selcection_button_background"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@+id/textView">
 
+
+            <RadioButton
+                android:id="@+id/expenses_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:checked="@={viewModel.isExpensesTransaction}"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:paddingLeft="16dp"
+                android:paddingTop="3dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="3dp"
+                android:text="Expense"
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/white" />
+
+            <RadioButton
+                android:id="@+id/income_radio_button"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/radio_flat_selector"
+                android:button="@android:color/transparent"
+                android:checked="@{!viewModel.isExpensesTransaction}"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:paddingLeft="16dp"
+                android:paddingTop="3dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="3dp"
+                android:text="Income"
+                android:textSize="@dimen/text_size_tiny"
+                android:textColor="@color/white" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/dasd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/default_margin"
+            android:layout_marginStart="@dimen/default_margin"
+            android:text="Transaction type"
+            android:textColor="@color/white"
+            android:textSize="@dimen/margin_small"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/transaction_type_radio_group" />
+
+
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            android:layout_marginHorizontal="@dimen/default_margin"
+            app:layout_constraintTop_toBottomOf="@+id/dasd" >
+
+
+        </com.google.android.material.chip.ChipGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

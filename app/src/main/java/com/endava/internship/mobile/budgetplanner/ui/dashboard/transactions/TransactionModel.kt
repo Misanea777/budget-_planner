@@ -15,4 +15,5 @@ class TransactionModel(
     val icon = if(isExpenses) categoryExpensesIDToResourceID(id) else categoryIncomeIDToResourceID(id)
 
     fun getBackgroundColor() = BlendModeColorFilter(Color.parseColor(color), BlendMode.SRC_ATOP)
+    fun getBackgroundColorAsInt() = Color.parseColor(color)
 }

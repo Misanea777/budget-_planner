@@ -22,6 +22,10 @@ class AddTransactionViewModel @Inject constructor(
     private val _incomeCategories: MutableLiveData<List<TransactionModel>> = MutableLiveData()
     val incomeCategories: LiveData<List<TransactionModel>> = _incomeCategories
 
+    val isExpensesTransaction: MutableLiveData<Boolean> = MutableLiveData(true)
+
+    var selectedCategoryName: String? = null
+
     fun getCategories() = asyncExecute {
         val expenseCategoriesResponse = transactionCategoryRepository.getExpenseCategories()
         val incomeCategoriesResponse = transactionCategoryRepository.getIncomeCategories()

@@ -117,5 +117,9 @@ class DashboardFragment :
                 }", ""
             )
         }
+
+        binding.addTransactionButton.setOnClickListener {
+            findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToAddTransactionFragment())
+        }
     }
 }
