@@ -22,6 +22,8 @@
         <item name="actionBarStyle">@style/ThemeActionBar</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="tabStyle">@style/Widget.App.TabLayout</item>
+
+        <item name="materialCalendarTheme">@style/ThemeOverlay.App.DatePicker</item>
     </style>
 
     <style name="TextInputLayoutOverlay">
@@ -60,5 +62,11 @@
         <item name="colorPrimary">@color/white</item>
         <item name="colorSurface">@android:color/transparent</item>
         <item name="colorOnSurface">@color/white</item>
+    </style>
+
+    <style name="ThemeOverlay.App.DatePicker" parent="@style/ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="colorPrimary">@color/dark_blue</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Customize text field of the text input mode. -->
     </style>
 </resources>

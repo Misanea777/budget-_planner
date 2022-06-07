@@ -1,19 +1,19 @@
 package com.endava.internship.mobile.budgetplanner.ui.transaction
 
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.ColorUtils
+import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.endava.internship.mobile.budgetplanner.R
-import com.endava.internship.mobile.budgetplanner.databinding.ActivityMainBinding.inflate
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentAddTransactionBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
+import com.endava.internship.mobile.budgetplanner.ui.dialogs.DatePickerDialog
+import com.endava.internship.mobile.budgetplanner.ui.dialogs.SuccessTransactionDialog
+import com.endava.internship.mobile.budgetplanner.util.*
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,59 +24,122 @@ class AddTransactionFragment :
 
     private val addTransactionViewModel by viewModels<AddTransactionViewModel>()
 
+    private lateinit var adapter: TransactionChipGroupViewAdapter
+
+    private val args: AddTransactionFragmentArgs by navArgs()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        addTransactionViewModel.isExpensesTransaction.value = args.isFromExpenses
+        return binding.root
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.apply {
             viewModel = addTransactionViewModel
             lifecycleOwner = viewLifecycleOwner
         }
 
-        binding.backButton.setOnClickListener {
-            findNavController().navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToDashboardFragment())
+        addTransactionViewModel.amountValidator.error.observe(viewLifecycleOwner) { error ->
+            binding.inputAmount.error = binding.inputAmount.error.toString() + addTransactionViewModel.balance?.toTwoDecimalPlaces()
         }
 
+
+
+        addTransactionViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
+            statusMessage.getContentIfNotHandled()?.let {
+                showErrorDialog(this.getString(R.string.error_general), it)
+            }
+        }
+
+        addTransactionViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            loadingDialogSetVisible(isLoading)
+        }
+
+        addTransactionViewModel.receivedExpenseTransaction.observe(viewLifecycleOwner) { receivedExpenseTransaction ->
+            createSuccessDialog("A new Expense of ${receivedExpenseTransaction.amount} has been added.")
+                .show(childFragmentManager, "success_expense_transaction")
+        }
+
+        addTransactionViewModel.receivedIncomeTransaction.observe(viewLifecycleOwner) { receivedIncomeTransaction ->
+            createSuccessDialog("A new Income of ${receivedIncomeTransaction.amount} has been added.")
+                .show(childFragmentManager, "success_expense_transaction")
+        }
+
+        binding.backButton.setOnClickListener {
+            goToPreviousScreen()
+        }
+
+        adapter = TransactionChipGroupViewAdapter(layoutInflater, binding.chipGroup)
+
         addTransactionViewModel.isExpensesTransaction.observe(viewLifecycleOwner) { isExpensesTransaction ->
-            binding.chipGroup.removeAllViews()
+            addTransactionViewModel.clearAllFields()
             if (isExpensesTransaction) {
                 addTransactionViewModel.expensesCategories.observe(viewLifecycleOwner) { expensesCategories ->
-                    expensesCategories.forEach { addChip(it.name, it.getBackgroundColorAsInt()) }
+                    adapter.updateDataSet(expensesCategories)
                 }
             } else {
                 addTransactionViewModel.incomeCategories.observe(viewLifecycleOwner) { incomeCategories ->
-                    incomeCategories.forEach { addChip(it.name, it.getBackgroundColorAsInt()) }
+                    adapter.updateDataSet(incomeCategories)
                 }
             }
 
         }
 
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-            addTransactionViewModel.selectedCategoryName =
-                group.findViewById<Chip>(checkedIds.first()).text.toString()
+            group.setUncheckedChipsAlpha(checkedIds, 0.2f)
+            var selected: Chip? = null
+            checkedIds.firstOrNull()?.let { selected = group.findViewById(it) }
+            selected?.let {
+                addTransactionViewModel.selectedCategoryName = selected?.text.toString()
+            }
         }
 
-        addTransactionViewModel.getCategories()
+        binding.editTextAmount.filters = arrayOf(DecimalDigitsInputFilter(18, 2))
+
+        initDatePicker()
 
     }
 
-    private fun addChip(text: String, color: Int) {
-        val colorList = ColorStateList(
-            arrayOf(
-                intArrayOf(android.R.attr.state_selected),
-                intArrayOf(android.R.attr.state_checked),
-                intArrayOf(android.R.attr.state_enabled)
-            ),
-            intArrayOf(
-                color,
-                color,
-                ColorUtils.setAlphaComponent(color, 128)
-            )
+    private fun initDatePicker() {
+
+        val calendar = getCalendarInstanceFromUTC()
+        val datePickerDialog = DatePickerDialog(
+            childFragmentManager,
+            "Pick a transaction date",
+            calendar.oneYearAgoTime().timeInMillis,
+            calendar.todayTime().timeInMillis
         )
 
-        val newChip =
-            LayoutInflater.from(this.context).inflate(R.layout.layout_chip_choice, null) as Chip
-        newChip.text = text
-        newChip.isChecked = false
-        newChip.setTextColor(ContextCompat.getColor(requireActivity(), R.color.white))
-        newChip.chipBackgroundColor = colorList
-        binding.chipGroup.addView(newChip, binding.chipGroup.childCount - 1)
+        binding.calendarText.setOnClickListener {
+            datePickerDialog.show()
+        }
+
+        datePickerDialog.datePicker.addOnPositiveButtonClickListener {
+            val selected = datePickerDialog.datePicker.selection
+            selected?.let { addTransactionViewModel.selectedDate.value = selected }
+        }
+
+        addTransactionViewModel.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
+            binding.calendarText.text = selectedDate.getDateFormatted()
+        }
     }
+
+    private fun goToPreviousScreen() {
+        findNavController().navigate(AddTransactionFragmentDirections.actionAddTransactionFragmentToDashboardFragment())
+    }
+
+    private fun createSuccessDialog(msg: String) = SuccessTransactionDialog(
+        "Success",
+        msg,
+        onDone = { goToPreviousScreen() },
+        onAddAnother = {
+            addTransactionViewModel.clearAllFields()
+            binding.chipGroup.clearCheck()
+        }
+    )
 }

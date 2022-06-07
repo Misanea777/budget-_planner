@@ -112,5 +112,9 @@
         <action
             android:id="@+id/action_add_transaction_fragment_to_dashboard_fragment"
             app:destination="@id/dashboard_fragment" />
+        <argument
+            android:name="isFromExpenses"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 </navigation>

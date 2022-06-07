@@ -3,11 +3,17 @@ package com.endava.internship.mobile.budgetplanner.util
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
+import androidx.core.view.children
 import com.endava.internship.mobile.budgetplanner.R
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.regex.Pattern
 import kotlin.math.floor
 import kotlin.math.roundToInt
@@ -34,6 +40,16 @@ fun String.isValidEmail() =
 fun String.isLessOrEqualThan(number: Int): Boolean {
     val asDouble = this.toDoubleOrNull()
     return asDouble != null && asDouble <= number
+}
+
+fun String.isLessOrEqualThan(number: Double?): Boolean {
+    val asDouble = this.toDoubleOrNull()
+    return asDouble != null && number != null && asDouble <= number
+}
+
+fun String.isGreaterOrEqualThan(number: Int): Boolean {
+    val asDouble = this.toDoubleOrNull()
+    return asDouble != null && asDouble >= number
 }
 
 val formatter = DecimalFormat("##0.00").apply {
@@ -98,4 +114,29 @@ fun TextInputEditText.restrictWithoutSpaces() {
         }})
 }
 
+fun ChipGroup.setUncheckedChipsAlpha(checkedIds: List<Int>, alpha: Float) {
+    this.children.filter { !checkedIds.contains(it.id) }.forEach { it.alpha = alpha }
+    this.children.filter { checkedIds.contains(it.id) }.forEach { it.alpha = 1f }
+}
 
+fun getCalendarInstanceFromUTC() = Calendar.getInstance(TimeZone.getTimeZone("UTC"))
+
+fun Calendar.todayTime() = this.apply {
+    timeInMillis = MaterialDatePicker.todayInUtcMilliseconds()
+}
+fun Calendar.oneYearAgoTime() = this.apply {
+    todayTime()
+    this[Calendar.YEAR] = this[Calendar.YEAR] - 1
+}
+
+val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+
+fun Long.getDateFormatted(): String {
+    val calendar = getCalendarInstanceFromUTC()
+    calendar.timeInMillis = this
+    return dateFormat.format(calendar.time)
+}
+
+fun Boolean?.andOrNull(bool: Boolean?) = if(this != null && bool != null) this && bool else null
+
+fun Boolean?.notOrNull() = if(this != null ) !this else null

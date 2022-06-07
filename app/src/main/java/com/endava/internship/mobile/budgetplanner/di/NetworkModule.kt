@@ -2,10 +2,7 @@ package com.endava.internship.mobile.budgetplanner.di
 
 import com.endava.internship.mobile.budgetplanner.BuildConfig
 import com.endava.internship.mobile.budgetplanner.data.local.preferences.UserPreferences
-import com.endava.internship.mobile.budgetplanner.data.remote.AuthApi
-import com.endava.internship.mobile.budgetplanner.data.remote.BalanceApi
-import com.endava.internship.mobile.budgetplanner.data.remote.IndustryApi
-import com.endava.internship.mobile.budgetplanner.data.remote.TransactionCategoryApi
+import com.endava.internship.mobile.budgetplanner.data.remote.*
 import com.endava.internship.mobile.budgetplanner.data.repository.*
 import com.endava.internship.mobile.budgetplanner.di.dispatchers.IoDispatcher
 import com.endava.internship.mobile.budgetplanner.network.AuthorizationInterceptor
@@ -73,6 +70,11 @@ class NetworkModule {
 
     @Singleton
     @Provides
+    fun provideTransactionService(retrofit: Retrofit): TransactionApi =
+        retrofit.create(TransactionApi::class.java)
+
+    @Singleton
+    @Provides
     fun httpLoggingInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
         setLevel(HttpLoggingInterceptor.Level.BODY)
     }
@@ -114,4 +116,11 @@ class NetworkModule {
         api: BalanceApi,
         @IoDispatcher ioDispatcher: CoroutineDispatcher
     ): BalanceRepository = DefaultBalanceRepository(api, ioDispatcher)
+
+    @Singleton
+    @Provides
+    fun provideDefaultTransactionRepository(
+        api: TransactionApi,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher
+    ): TransactionRepository = DefaultTransactionRepository(api, ioDispatcher)
 }
