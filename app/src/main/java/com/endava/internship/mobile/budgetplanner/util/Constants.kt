@@ -24,7 +24,6 @@ object Constants {
         const val TRANSACTION_EXPENSE_CATEGORY_PATH: String = "expense"
         const val TRANSACTION_INCOME_CATEGORY_PATH: String = "income"
 
-        const val CURRENT_BALANCE_PATH: String = "dashboard"
     }
 
     object DialogTags {

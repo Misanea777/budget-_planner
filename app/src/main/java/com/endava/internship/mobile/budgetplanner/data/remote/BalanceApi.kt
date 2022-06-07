@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface BalanceApi {
 
-    @GET(Constants.ApiPaths.CURRENT_BALANCE_PATH)
+    @GET("dashboard/amount")
     suspend fun getCurrentBalance(): Balance
 }

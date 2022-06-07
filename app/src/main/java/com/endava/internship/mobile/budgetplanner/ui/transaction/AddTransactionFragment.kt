@@ -44,11 +44,6 @@ class AddTransactionFragment :
             lifecycleOwner = viewLifecycleOwner
         }
 
-        addTransactionViewModel.amountValidator.error.observe(viewLifecycleOwner) { error ->
-            binding.inputAmount.error = binding.inputAmount.error.toString() + addTransactionViewModel.balance?.toTwoDecimalPlaces()
-        }
-
-
 
         addTransactionViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
             statusMessage.getContentIfNotHandled()?.let {

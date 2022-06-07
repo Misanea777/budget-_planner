@@ -2,7 +2,6 @@ package com.endava.internship.mobile.budgetplanner.ui.transaction
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.data.model.ExpenseCategory
 import com.endava.internship.mobile.budgetplanner.data.model.ExpenseTransaction
 import com.endava.internship.mobile.budgetplanner.data.model.IncomeCategory
@@ -13,11 +12,10 @@ import com.endava.internship.mobile.budgetplanner.data.repository.TransactionRep
 import com.endava.internship.mobile.budgetplanner.network.Resource
 import com.endava.internship.mobile.budgetplanner.providers.ResourceProvider
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseViewModel
-import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionModel
 import com.endava.internship.mobile.budgetplanner.util.*
 import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import java.util.*
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -53,7 +51,7 @@ class AddTransactionViewModel @Inject constructor(
             value?.length?.let { it <= 25 } ?: false
         }
         addRule("The title can't contain special characters.") { value ->
-            value?.let { !it.hasMinimumOneSpecialChar() } ?: false
+            value?.let { it.containsOnlyAlphaChar() } ?: false
         }
     }
 
@@ -66,7 +64,7 @@ class AddTransactionViewModel @Inject constructor(
             isExpensesTransaction.value?.let { if (it) return@addRule true }
             value?.isLessOrEqualThan(Constants.MAX_INITIAL_BALANCE) ?: false
         }
-        addRule("The amount can not be greater than the currently available amount of ") { value ->
+        addRule("The amount can not be greater than the currently available amount of ${balance?.toTwoDecimalPlaces()}") { value ->
             isExpensesTransaction.value?.let { if (!it) return@addRule true }
             value?.isLessOrEqualThan(balance) ?: false
         }
@@ -99,7 +97,14 @@ class AddTransactionViewModel @Inject constructor(
 
 
     init {
-        getCurrentBalance()
+        runBlocking {
+            val response = balanceRepository.getCurrentBalance()
+            when (response) {
+                is Resource.Success -> balance = response.value.amount
+                is Resource.Failure -> pushStatusMessage(response.message)
+            }
+        }
+
         getCategories()
     }
 
@@ -151,7 +156,6 @@ class AddTransactionViewModel @Inject constructor(
     val receivedIncomeTransaction: LiveData<IncomeTransaction> = _receivedIncomeTransaction
 
     fun addTransaction() = asyncExecute {
-        println("here")
         isExpensesTransaction.value?.let { isExpensesTransaction ->
             if (isExpensesTransaction) {
                 val response = transactionRepository.addExpenseTransaction(
@@ -164,7 +168,10 @@ class AddTransactionViewModel @Inject constructor(
                     )
                 )
                 when (response) {
-                    is Resource.Success -> _receivedExpenseTransaction.value = response.value
+                    is Resource.Success -> {
+                        response.value.amount?.let { balance = balance?.minus(it) }
+                        _receivedExpenseTransaction.value = response.value
+                    }
                     is Resource.Failure -> pushStatusMessage(response.message)
                 }
             } else {
@@ -178,11 +185,13 @@ class AddTransactionViewModel @Inject constructor(
                     )
                 )
                 when (response) {
-                    is Resource.Success -> _receivedIncomeTransaction.value = response.value
+                    is Resource.Success -> {
+                        response.value.amount?.let { balance = balance?.plus(it) }
+                        _receivedIncomeTransaction.value = response.value
+                    }
                     is Resource.Failure -> pushStatusMessage(response.message)
                 }
             }
         }
-
     }
 }
