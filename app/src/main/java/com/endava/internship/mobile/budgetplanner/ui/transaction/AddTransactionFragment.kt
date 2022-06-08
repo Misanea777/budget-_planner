@@ -44,6 +44,10 @@ class AddTransactionFragment :
             lifecycleOwner = viewLifecycleOwner
         }
 
+        addTransactionViewModel.balance.observe(viewLifecycleOwner) {
+            addTransactionViewModel.updateExpensesRuleErrorMsg()
+        }
+
 
         addTransactionViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
             statusMessage.getContentIfNotHandled()?.let {
@@ -82,7 +86,6 @@ class AddTransactionFragment :
                     adapter.updateDataSet(incomeCategories)
                 }
             }
-
         }
 
         binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
@@ -90,7 +93,7 @@ class AddTransactionFragment :
             var selected: Chip? = null
             checkedIds.firstOrNull()?.let { selected = group.findViewById(it) }
             selected?.let {
-                addTransactionViewModel.selectedCategoryName = selected?.text.toString()
+                addTransactionViewModel.selectedCategoryName.value = selected?.text.toString()
             }
         }
 
@@ -116,11 +119,7 @@ class AddTransactionFragment :
 
         datePickerDialog.datePicker.addOnPositiveButtonClickListener {
             val selected = datePickerDialog.datePicker.selection
-            selected?.let { addTransactionViewModel.selectedDate.value = selected }
-        }
-
-        addTransactionViewModel.selectedDate.observe(viewLifecycleOwner) { selectedDate ->
-            binding.calendarText.text = selectedDate.getDateFormatted()
+            selected?.let { addTransactionViewModel.selectedDate.value = selected.getDateFormatted() }
         }
     }
 

@@ -13,9 +13,9 @@ import com.endava.internship.mobile.budgetplanner.network.Resource
 import com.endava.internship.mobile.budgetplanner.providers.ResourceProvider
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseViewModel
 import com.endava.internship.mobile.budgetplanner.util.*
+import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataStepValidatorResolver
 import com.endava.internship.mobile.budgetplanner.util.validators.LiveDataValidator
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,11 +36,19 @@ class AddTransactionViewModel @Inject constructor(
 
     val isExpensesTransaction: MutableLiveData<Boolean> = MutableLiveData(true)
 
-    var selectedCategoryName: String? = null
-    var selectedCategoryNameError: MutableLiveData<String> = MutableLiveData()
+    val selectedCategoryName: MutableLiveData<String> = MutableLiveData()
+    val selectedCategoryNameValidator = LiveDataValidator(selectedCategoryName).apply {
+        addRule("The transaction should have a category selected.") {
+            it != null
+        }
+    }
 
-    val selectedDate: MutableLiveData<Long> =
-        MutableLiveData(getCalendarInstanceFromUTC().todayTime().timeInMillis)
+    val selectedDate: MutableLiveData<String> = MutableLiveData()
+    val selectedDateValidator = LiveDataValidator(selectedDate).apply {
+        addRule("The date can not be empty") {
+            it != null
+        }
+    }
 
     val title: MutableLiveData<String> = MutableLiveData()
     val titleValidator = LiveDataValidator(title).apply {
@@ -50,10 +58,16 @@ class AddTransactionViewModel @Inject constructor(
         addRule("The title can not be more than 25 characters long.") { value ->
             value?.length?.let { it <= 25 } ?: false
         }
-        addRule("The title can't contain special characters.") { value ->
+        addRule("The title should contain only alpha characters.") { value ->
             value?.let { it.containsOnlyAlphaChar() } ?: false
         }
     }
+
+    val note: MutableLiveData<String> = MutableLiveData()
+
+    val balance: MutableLiveData<Double> = MutableLiveData()
+
+    private val expensesRuleErrorMsg: MutableLiveData<String> = MutableLiveData()
 
     val amount: MutableLiveData<String> = MutableLiveData<String>()
     val amountValidator = LiveDataValidator(amount).apply {
@@ -64,47 +78,44 @@ class AddTransactionViewModel @Inject constructor(
             isExpensesTransaction.value?.let { if (it) return@addRule true }
             value?.isLessOrEqualThan(Constants.MAX_INITIAL_BALANCE) ?: false
         }
-        addRule("The amount can not be greater than the currently available amount of ${balance?.toTwoDecimalPlaces()}") { value ->
+        addRule(expensesRuleErrorMsg) { value ->
             isExpensesTransaction.value?.let { if (!it) return@addRule true }
-            value?.isLessOrEqualThan(balance) ?: false
+            value?.isLessOrEqualThan(balance.value) ?: false
         }
     }
 
-    val note: MutableLiveData<String> = MutableLiveData()
-
-    var balance: Double? = null
+    fun updateExpensesRuleErrorMsg() {
+        expensesRuleErrorMsg.value = "The amount can not be greater than the currently available amount of " + balance.value?.toTwoDecimalPlaces()
+    }
 
     private fun validateForm(): Boolean {
-        val isTitleValid = titleValidator.isValid()
-        val isAmountValid = amountValidator.isValid()
-        val isSelectedCategoryValid = selectedCategoryName != null
-        selectedCategoryNameError.value =
-            if (!isSelectedCategoryValid) "The transaction should have a category selected." else null
-
-        return isTitleValid && isAmountValid && isSelectedCategoryValid
+        clearAllErrors()
+        return LiveDataStepValidatorResolver(listOf(
+            titleValidator,
+            amountValidator,
+            selectedDateValidator,
+            selectedCategoryNameValidator
+        )).isValid()
     }
 
     fun clearAllFields() {
         title.value = null
-        titleValidator.error.value = null
         amount.value = null
-        amountValidator.error.value = null
         note.value = null
-        selectedDate.value = getCalendarInstanceFromUTC().todayTime().timeInMillis
-        selectedCategoryName = null
-        selectedCategoryNameError.value = null
+        selectedDate.value = null
+        selectedCategoryName.value = null
+        clearAllErrors()
     }
 
+    private fun clearAllErrors() {
+        titleValidator.error.value = null
+        amountValidator.error.value = null
+        selectedDateValidator.error.value = null
+        selectedCategoryNameValidator.error.value = null
+    }
 
     init {
-        runBlocking {
-            val response = balanceRepository.getCurrentBalance()
-            when (response) {
-                is Resource.Success -> balance = response.value.amount
-                is Resource.Failure -> pushStatusMessage(response.message)
-            }
-        }
-
+        getCurrentBalance()
         getCategories()
     }
 
@@ -119,7 +130,7 @@ class AddTransactionViewModel @Inject constructor(
                         it.name,
                         it.color
                     )
-                }
+                }.sortedByDescending { it.id }
             is Resource.Failure -> pushStatusMessage(expenseCategoriesResponse.message)
         }
 
@@ -131,15 +142,16 @@ class AddTransactionViewModel @Inject constructor(
                         it.name,
                         it.color
                     )
-                }
+                }.sortedByDescending { it.id }
             is Resource.Failure -> pushStatusMessage(incomeCategoriesResponse.message)
         }
     }
 
     private fun getCurrentBalance() = asyncExecute {
+        println("in balan")
         val response = balanceRepository.getCurrentBalance()
         when (response) {
-            is Resource.Success -> balance = response.value.amount
+            is Resource.Success -> balance.value = response.value.amount
             is Resource.Failure -> pushStatusMessage(response.message)
         }
     }
@@ -161,15 +173,15 @@ class AddTransactionViewModel @Inject constructor(
                 val response = transactionRepository.addExpenseTransaction(
                     ExpenseTransaction(
                         amount.value?.toDouble(),
-                        selectedDate.value?.getDateFormatted(),
-                        ExpenseCategory(selectedCategoryName),
+                        selectedDate.value,
+                        ExpenseCategory(selectedCategoryName.value),
                         title.value,
                         note.value
                     )
                 )
                 when (response) {
                     is Resource.Success -> {
-                        response.value.amount?.let { balance = balance?.minus(it) }
+                        response.value.amount?.let { balance.value = balance.value?.minus(it) }
                         _receivedExpenseTransaction.value = response.value
                     }
                     is Resource.Failure -> pushStatusMessage(response.message)
@@ -178,15 +190,15 @@ class AddTransactionViewModel @Inject constructor(
                 val response = transactionRepository.addIncomeTransaction(
                     IncomeTransaction(
                         amount.value?.toDouble(),
-                        selectedDate.value?.getDateFormatted(),
-                        IncomeCategory(selectedCategoryName),
+                        selectedDate.value,
+                        IncomeCategory(selectedCategoryName.value),
                         title.value,
                         note.value
                     )
                 )
                 when (response) {
                     is Resource.Success -> {
-                        response.value.amount?.let { balance = balance?.plus(it) }
+                        response.value.amount?.let { balance.value = balance.value?.plus(it) }
                         _receivedIncomeTransaction.value = response.value
                     }
                     is Resource.Failure -> pushStatusMessage(response.message)

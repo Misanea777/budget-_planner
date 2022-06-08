@@ -127,7 +127,7 @@
                 android:theme="@style/TextInputLayoutOverlay"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/input_amount">
+                app:layout_constraintTop_toBottomOf="@+id/calendar_error">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edit_text_add_note"
@@ -155,8 +155,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_tiny"
                 android:layout_marginStart="@dimen/default_margin"
-                android:layout_marginTop="@dimen/text_size_tiny"
-                app:layout_constraintTop_toBottomOf="@+id/add_note_title"
+                app:layout_constraintTop_toBottomOf="@+id/input_amount"
                 app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
@@ -167,25 +166,36 @@
                 android:layout_marginHorizontal="@dimen/default_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:drawablePadding="@dimen/text_size_tiny"
+                android:background="@drawable/text_field_background"
+                android:text="@{viewModel.selectedDate}"
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_tiny"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/calendar_title"
                 app:drawableStartCompat="@drawable/ic_calendar" />
 
-
+            <TextView
+                android:id="@+id/calendar_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/calendar_text"
+                app:layout_constraintStart_toStartOf="parent"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="@dimen/text_size_extremely_tiny"
+                android:layout_marginStart="@dimen/default_margin"
+                android:text="@{viewModel.selectedDateValidator.error}"/>
 
             <TextView
                 android:id="@+id/textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/margin_small"
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="Transaction type"
                 android:textColor="@color/white"
-                android:textSize="@dimen/margin_small"
+                android:textSize="@dimen/text_size_tiny"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/calendar_text" />
+                app:layout_constraintTop_toBottomOf="@+id/add_note_title" />
 
             <RadioGroup
                 android:id="@+id/transaction_type_radio_group"
@@ -242,11 +252,11 @@
                 android:id="@+id/dasd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginTop="@dimen/margin_small"
                 android:layout_marginStart="@dimen/default_margin"
                 android:text="Category"
                 android:textColor="@color/white"
-                android:textSize="@dimen/margin_small"
+                android:textSize="@dimen/text_size_tiny"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/transaction_type_radio_group" />
 
@@ -271,7 +281,7 @@
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="@dimen/text_size_extremely_tiny"
                 android:layout_marginStart="@dimen/default_margin"
-                android:text="@{viewModel.selectedCategoryNameError}"/>
+                android:text="@{viewModel.selectedCategoryNameValidator.error}"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
