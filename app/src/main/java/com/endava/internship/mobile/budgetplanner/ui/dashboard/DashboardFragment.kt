@@ -116,7 +116,5 @@ class DashboardFragment :
                 }", ""
             )
         }
-
-
     }
 }

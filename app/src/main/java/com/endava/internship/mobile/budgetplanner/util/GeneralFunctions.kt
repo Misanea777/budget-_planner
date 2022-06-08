@@ -13,7 +13,10 @@ import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatterBuilder
 import java.util.*
+import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
 import kotlin.math.floor
 import kotlin.math.roundToInt
@@ -133,7 +136,7 @@ fun Calendar.oneYearAgoTime() = this.apply {
     this[Calendar.YEAR] = this[Calendar.YEAR] - 1
 }
 
-val dateFormat = SimpleDateFormat("dd/MM/yyyy")
+val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.GERMANY)
 
 fun Long.getDateFormatted(): String {
     val calendar = getCalendarInstanceFromUTC()
@@ -141,7 +144,7 @@ fun Long.getDateFormatted(): String {
     return dateFormat.format(calendar.time)
 }
 
-fun String.getLongFromFormattedDate(): Long? = dateFormat.parse(this)?.time
+fun String.getLongFromFormattedDate(): Long? = dateFormat.parse(this)?.time?.plus(TimeUnit.DAYS.toMillis(1))
 
 fun Boolean?.andOrNull(bool: Boolean?) = if(this != null && bool != null) this && bool else null
 

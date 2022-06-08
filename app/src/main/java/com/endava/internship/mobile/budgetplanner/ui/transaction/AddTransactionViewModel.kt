@@ -2,6 +2,7 @@ package com.endava.internship.mobile.budgetplanner.ui.transaction
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.data.model.ExpenseCategory
 import com.endava.internship.mobile.budgetplanner.data.model.ExpenseTransaction
 import com.endava.internship.mobile.budgetplanner.data.model.IncomeCategory
@@ -38,27 +39,27 @@ class AddTransactionViewModel @Inject constructor(
 
     val selectedCategoryName: MutableLiveData<String> = MutableLiveData()
     val selectedCategoryNameValidator = LiveDataValidator(selectedCategoryName).apply {
-        addRule("The transaction should have a category selected.") {
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_category_error)) {
             it != null
         }
     }
 
     val selectedDate: MutableLiveData<String> = MutableLiveData()
     val selectedDateValidator = LiveDataValidator(selectedDate).apply {
-        addRule("The date can not be empty") {
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_date_error)) {
             it != null
         }
     }
 
     val title: MutableLiveData<String> = MutableLiveData()
     val titleValidator = LiveDataValidator(title).apply {
-        addRule("The title can not be less than 5 characters long.") { value ->
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_title_less_then_minimum_len_error)) { value ->
             value?.length?.let { return@let it >= 5 } ?: false
         }
-        addRule("The title can not be more than 25 characters long.") { value ->
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_title_more_then_max_len_error)) { value ->
             value?.length?.let { it <= 25 } ?: false
         }
-        addRule("The title should contain only alpha characters.") { value ->
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_title_more_only_alpha_char_error)) { value ->
             value?.let { it.containsOnlyAlphaChar() } ?: false
         }
     }
@@ -71,10 +72,10 @@ class AddTransactionViewModel @Inject constructor(
 
     val amount: MutableLiveData<String> = MutableLiveData<String>()
     val amountValidator = LiveDataValidator(amount).apply {
-        addRule("The amount can not be less than 1.00.") { value ->
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_amount_less_then_permitted_error)) { value ->
             value?.isGreaterOrEqualThan(1) ?: false
         }
-        addRule("Woaah, too much money! Please spend something!") { value ->
+        addRule(resourceProvider.getStringRes(R.string.add_transaction_amount_too_much_money_error)) { value ->
             isExpensesTransaction.value?.let { if (it) return@addRule true }
             value?.isLessOrEqualThan(Constants.MAX_INITIAL_BALANCE) ?: false
         }
@@ -85,17 +86,20 @@ class AddTransactionViewModel @Inject constructor(
     }
 
     fun updateExpensesRuleErrorMsg() {
-        expensesRuleErrorMsg.value = "The amount can not be greater than the currently available amount of " + balance.value?.toTwoDecimalPlaces()
+        expensesRuleErrorMsg.value =
+            resourceProvider.getStringRes(R.string.add_transaction_amount_more_than_available_error) + balance.value?.toTwoDecimalPlaces()
     }
 
     private fun validateForm(): Boolean {
         clearAllErrors()
-        return LiveDataStepValidatorResolver(listOf(
-            titleValidator,
-            amountValidator,
-            selectedDateValidator,
-            selectedCategoryNameValidator
-        )).isValid()
+        return LiveDataStepValidatorResolver(
+            listOf(
+                titleValidator,
+                amountValidator,
+                selectedDateValidator,
+                selectedCategoryNameValidator
+            )
+        ).isValid()
     }
 
     fun clearAllFields() {
@@ -148,7 +152,6 @@ class AddTransactionViewModel @Inject constructor(
     }
 
     private fun getCurrentBalance() = asyncExecute {
-        println("in balan")
         val response = balanceRepository.getCurrentBalance()
         when (response) {
             is Resource.Success -> balance.value = response.value.amount

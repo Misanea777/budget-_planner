@@ -17,4 +17,6 @@ class TransactionModel(
     fun getBackgroundColor() = BlendModeColorFilter(Color.parseColor(color), BlendMode.SRC_ATOP)
 
     var numberOfTransactions: Long = 0
+
+    fun getNumberOfTransactions() = "$numberOfTransactions transactions"
 }

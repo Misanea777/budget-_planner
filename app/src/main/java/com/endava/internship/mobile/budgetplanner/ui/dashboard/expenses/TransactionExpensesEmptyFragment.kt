@@ -19,7 +19,7 @@ class TransactionExpensesEmptyFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTransactionsEmptyBinding.inflate(layoutInflater)
-        binding.messageText.text = "You haven’t added any expenses\nfor this month yet."
+        binding.messageText.text = getString(R.string.dashboard_transaction_expense_empty_title)
         binding.addTransactionButton.setOnClickListener {
             findNavController().navigate(
                 DashboardFragmentDirections.actionDashboardFragmentToAddTransactionFragment(

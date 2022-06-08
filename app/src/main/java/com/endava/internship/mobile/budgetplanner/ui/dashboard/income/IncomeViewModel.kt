@@ -2,7 +2,6 @@ package com.endava.internship.mobile.budgetplanner.ui.dashboard.income
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.endava.internship.mobile.budgetplanner.data.model.ExpenseTransactionsGeneralInfo
 import com.endava.internship.mobile.budgetplanner.data.model.IncomeTransactionsGeneralInfo
 import com.endava.internship.mobile.budgetplanner.data.repository.TransactionCategoryRepository
 import com.endava.internship.mobile.budgetplanner.network.Resource

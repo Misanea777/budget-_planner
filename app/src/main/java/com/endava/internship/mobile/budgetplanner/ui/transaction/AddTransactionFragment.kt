@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -17,7 +16,6 @@ import com.endava.internship.mobile.budgetplanner.util.*
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class AddTransactionFragment :
@@ -49,7 +47,6 @@ class AddTransactionFragment :
             addTransactionViewModel.updateExpensesRuleErrorMsg()
         }
 
-
         addTransactionViewModel.statusMessage.observe(viewLifecycleOwner) { statusMessage ->
             statusMessage.getContentIfNotHandled()?.let {
                 showErrorDialog(this.getString(R.string.error_general), it)
@@ -61,12 +58,16 @@ class AddTransactionFragment :
         }
 
         addTransactionViewModel.receivedExpenseTransaction.observe(viewLifecycleOwner) { receivedExpenseTransaction ->
-            createSuccessDialog("A new Expense of ${receivedExpenseTransaction.amount} has been added.")
+            createSuccessDialog(
+                "${getString(R.string.add_transaction_expense_success_message_prefix)} ${receivedExpenseTransaction.amount} ${
+                    getString(R.string.add_transaction_success_message_suffix)}")
                 .show(childFragmentManager, "success_expense_transaction")
         }
 
         addTransactionViewModel.receivedIncomeTransaction.observe(viewLifecycleOwner) { receivedIncomeTransaction ->
-            createSuccessDialog("A new Income of ${receivedIncomeTransaction.amount} has been added.")
+            createSuccessDialog(
+                "${getString(R.string.add_transaction_income_success_message_prefix)} ${receivedIncomeTransaction.amount} ${
+                    getString(R.string.add_transaction_success_message_suffix)}")
                 .show(childFragmentManager, "success_expense_transaction")
         }
 
@@ -109,7 +110,7 @@ class AddTransactionFragment :
         val calendar = getCalendarInstanceFromUTC()
         val datePickerDialog = DatePickerDialog(
             childFragmentManager,
-            "Pick a transaction date",
+            getString(R.string.add_transaction_date_picker_title),
             calendar.oneYearAgoTime().timeInMillis,
             calendar.todayTime().timeInMillis,
             MaterialDatePicker.todayInUtcMilliseconds()
@@ -121,7 +122,8 @@ class AddTransactionFragment :
 
         binding.calendarText.setOnClickListener {
             datePickerDialog.apply {
-                addTransactionViewModel.selectedDate.value?.getLongFromFormattedDate()?.let { startSelection = it }
+                addTransactionViewModel.selectedDate.value?.getLongFromFormattedDate()
+                    ?.let { startSelection = it }
                 show()
             }
         }
@@ -132,7 +134,7 @@ class AddTransactionFragment :
     }
 
     private fun createSuccessDialog(msg: String) = SuccessTransactionDialog(
-        "Success",
+        getString(R.string.add_transaction_success_dialog_title),
         msg,
         onDone = { goToPreviousScreen() },
         onAddAnother = {
