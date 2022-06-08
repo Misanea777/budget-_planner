@@ -27,6 +27,7 @@ fun String.isValidFirstName() = Pattern.matches("^[A-Za-z]{3,22}$", this)
 fun String.isValidLastName() = Pattern.matches("^[A-Za-z]{3,22}$", this)
 
 fun String.containsOnlyAlphaChar() = Pattern.matches("^[A-Za-z]+$", this)
+fun String.containsOnlyAlphaCharAndSpaces() = Pattern.matches("^[A-Za-z ]+$", this)
 
 fun String.isValidPassword() = Pattern.matches("^(?=.*[^A-Za-z0-9])(?=.*[a-zA-Z])(.{8,22})$", this)
 

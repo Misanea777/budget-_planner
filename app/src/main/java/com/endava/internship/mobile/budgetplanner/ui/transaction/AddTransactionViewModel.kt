@@ -54,13 +54,13 @@ class AddTransactionViewModel @Inject constructor(
     val title: MutableLiveData<String> = MutableLiveData()
     val titleValidator = LiveDataValidator(title).apply {
         addRule(resourceProvider.getStringRes(R.string.add_transaction_title_less_then_minimum_len_error)) { value ->
-            value?.length?.let { return@let it >= 5 } ?: false
+            value?.filter { it.isLetter() }?.length?.let { it >= 5 } ?: false
         }
         addRule(resourceProvider.getStringRes(R.string.add_transaction_title_more_then_max_len_error)) { value ->
             value?.length?.let { it <= 25 } ?: false
         }
         addRule(resourceProvider.getStringRes(R.string.add_transaction_title_more_only_alpha_char_error)) { value ->
-            value?.let { it.containsOnlyAlphaChar() } ?: false
+            value?.let { it.containsOnlyAlphaCharAndSpaces() } ?: false
         }
     }
 
