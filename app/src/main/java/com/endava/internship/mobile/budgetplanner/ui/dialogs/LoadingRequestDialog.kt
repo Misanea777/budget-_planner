@@ -3,6 +3,8 @@ package com.endava.internship.mobile.budgetplanner.ui.dialogs
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.DialogFragmentRequestLoadingBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder

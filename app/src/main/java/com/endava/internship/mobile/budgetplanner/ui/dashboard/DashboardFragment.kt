@@ -118,13 +118,6 @@ class DashboardFragment :
             )
         }
 
-        binding.addTransactionButton.setOnClickListener {
-            val isFromExpenses = binding.tabLayout.selectedTabPosition == 0
-            findNavController().navigate(
-                DashboardFragmentDirections.actionDashboardFragmentToAddTransactionFragment(
-                    isFromExpenses
-                )
-            )
-        }
+
     }
 }

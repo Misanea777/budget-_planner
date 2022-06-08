@@ -77,6 +77,8 @@ fun Double.toMinimalisticNumberFormat(): String = when(floor(this).toInt()) {
 }
 
 fun String.asDollars(): String = "$$this"
+fun String.minusInFront(): String = "-$this"
+fun String.plusInFront(): String = "+$this"
 
 fun categoryExpensesIDToResourceID(id: Int): Int {
     return when (id) {

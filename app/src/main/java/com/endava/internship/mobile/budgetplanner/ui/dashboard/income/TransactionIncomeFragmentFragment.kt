@@ -3,11 +3,13 @@ package com.endava.internship.mobile.budgetplanner.ui.dashboard.income
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentTransactionsBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
+import com.endava.internship.mobile.budgetplanner.ui.dashboard.DashboardFragmentDirections
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionRecycleViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -40,6 +42,14 @@ class TransactionIncomeFragmentFragment :
 
         incomeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             loadingDialogSetVisible(isLoading)
+        }
+
+        binding.addTransactionButton.setOnClickListener {
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToAddTransactionFragment(
+                    false
+                )
+            )
         }
     }
 
