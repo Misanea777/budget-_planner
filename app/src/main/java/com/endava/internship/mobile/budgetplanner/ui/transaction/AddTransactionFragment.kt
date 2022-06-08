@@ -15,6 +15,7 @@ import com.endava.internship.mobile.budgetplanner.ui.dialogs.DatePickerDialog
 import com.endava.internship.mobile.budgetplanner.ui.dialogs.SuccessTransactionDialog
 import com.endava.internship.mobile.budgetplanner.util.*
 import com.google.android.material.chip.Chip
+import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -110,16 +111,19 @@ class AddTransactionFragment :
             childFragmentManager,
             "Pick a transaction date",
             calendar.oneYearAgoTime().timeInMillis,
-            calendar.todayTime().timeInMillis
-        )
-
-        binding.calendarText.setOnClickListener {
-            datePickerDialog.show()
+            calendar.todayTime().timeInMillis,
+            MaterialDatePicker.todayInUtcMilliseconds()
+        ) { selected ->
+            selected?.let {
+                addTransactionViewModel.selectedDate.value = selected.getDateFormatted()
+            }
         }
 
-        datePickerDialog.datePicker.addOnPositiveButtonClickListener {
-            val selected = datePickerDialog.datePicker.selection
-            selected?.let { addTransactionViewModel.selectedDate.value = selected.getDateFormatted() }
+        binding.calendarText.setOnClickListener {
+            datePickerDialog.apply {
+                addTransactionViewModel.selectedDate.value?.getLongFromFormattedDate()?.let { startSelection = it }
+                show()
+            }
         }
     }
 

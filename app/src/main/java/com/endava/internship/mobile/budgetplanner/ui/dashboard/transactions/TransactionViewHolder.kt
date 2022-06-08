@@ -11,6 +11,7 @@ class TransactionViewHolder(private val binding: TransactionCategoryItemBinding)
                 iconImage.setImageResource(model.icon)
                 iconImage.background.colorFilter = model.getBackgroundColor()
                 titleText.text = model.name
+                transactionsText.text = "${model.numberOfTransactions} transactions"
             }
         }
 }

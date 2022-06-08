@@ -141,6 +141,8 @@ fun Long.getDateFormatted(): String {
     return dateFormat.format(calendar.time)
 }
 
+fun String.getLongFromFormattedDate(): Long? = dateFormat.parse(this)?.time
+
 fun Boolean?.andOrNull(bool: Boolean?) = if(this != null && bool != null) this && bool else null
 
 fun Boolean?.notOrNull() = if(this != null ) !this else null

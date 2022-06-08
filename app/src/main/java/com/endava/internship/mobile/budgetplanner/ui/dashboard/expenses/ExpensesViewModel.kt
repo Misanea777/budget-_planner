@@ -17,17 +17,19 @@ class ExpensesViewModel @Inject constructor(
     val resourceProvider: ResourceProvider
 ) : BaseViewModel(resourceProvider) {
 
-    private val _categories: MutableLiveData<List<TransactionModel>> = MutableLiveData()
-    val categories: LiveData<List<TransactionModel>> = _categories
+    private var categories: List<TransactionModel>? = null
 
     private val _transactionsGeneralInfo: MutableLiveData<ExpenseTransactionsGeneralInfo> =
         MutableLiveData()
     val transactionsGeneralInfo: LiveData<ExpenseTransactionsGeneralInfo> = _transactionsGeneralInfo
 
+    private val _transactions: MutableLiveData<List<TransactionModel>> = MutableLiveData()
+    val transactions: LiveData<List<TransactionModel>> = _transactions
+
     private suspend fun getCategories() {
         val response = transactionCategoryRepository.getExpenseCategories()
         when (response) {
-            is Resource.Success -> _categories.value =
+            is Resource.Success -> categories =
                 response.value.map { TransactionModel(it.id, it.name, it.color, true) }
             is Resource.Failure -> pushStatusMessage(response.message)
         }
@@ -39,10 +41,10 @@ class ExpensesViewModel @Inject constructor(
             is Resource.Success -> {
                 _transactionsGeneralInfo.value = response.value
                 val transactions = response.value.expenseCategories
-//                _categories.value = _categories.value?.filter { transactions.contains(it.name) }
-//                    ?.forEach { transactionModel ->
-//                        transactions[transactionModel.name]?.let { transactionModel.numberOfTransactions = it}
-//                    }
+                _transactions.value = categories?.filter { transactions.contains(it.name) }
+                    ?.onEach { transactionModel ->
+                    transactions[transactionModel.name]?.let { transactionModel.numberOfTransactions = it}
+                }
             }
             is Resource.Failure -> pushStatusMessage(response.message)
         }

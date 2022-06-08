@@ -11,11 +11,10 @@ import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentDashboardBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.expenses.CardExpensesFragment
-import com.endava.internship.mobile.budgetplanner.ui.dashboard.expenses.TransactionsExpensesFragment
+import com.endava.internship.mobile.budgetplanner.ui.dashboard.expenses.TransactionExpensesHolderFragment
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.income.CardIncomeFragment
-import com.endava.internship.mobile.budgetplanner.ui.dashboard.income.TransactionIncomeFragmentFragment
+import com.endava.internship.mobile.budgetplanner.ui.dashboard.income.TransactionIncomesHolderFragment
 import com.endava.internship.mobile.budgetplanner.util.asDollars
-import com.endava.internship.mobile.budgetplanner.util.toFancyNumberFormat
 import com.endava.internship.mobile.budgetplanner.util.toMinimalisticNumberFormat
 import com.endava.internship.mobile.budgetplanner.util.toTwoDecimalPlaces
 import com.google.android.material.tabs.TabLayoutMediator
@@ -46,8 +45,8 @@ class DashboardFragment :
         )
 
         val fragmentListTransactions = arrayListOf<Fragment>(
-            TransactionsExpensesFragment(),
-            TransactionIncomeFragmentFragment(),
+            TransactionExpensesHolderFragment(),
+            TransactionIncomesHolderFragment(),
         )
 
         val adapterTransactions = ViewPagerAdapter(

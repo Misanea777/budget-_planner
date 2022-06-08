@@ -29,7 +29,7 @@ class TransactionsExpensesFragment :
     }
 
     private fun initObservers() {
-        expensesViewModel.categories.observe(viewLifecycleOwner) { categories ->
+        expensesViewModel.transactions.observe(viewLifecycleOwner) { categories ->
             viewAdapter.updateDataSet(categories.toTypedArray())
         }
 

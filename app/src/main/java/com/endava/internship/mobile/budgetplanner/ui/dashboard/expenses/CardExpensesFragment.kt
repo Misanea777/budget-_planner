@@ -21,7 +21,5 @@ class CardExpensesFragment :
             binding.cardImage.findViewById<TextView>(R.id.card_image_text).text =
                 transactionsGeneralInfo.sumExpenseCategories.toFancyNumberFormat().asDollars().minusInFront()
         }
-
     }
-
 }

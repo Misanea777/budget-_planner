@@ -2,6 +2,7 @@ package com.endava.internship.mobile.budgetplanner.ui.dashboard.income
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,23 +15,21 @@ import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.Tran
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TransactionIncomeFragmentFragment :
+class TransactionsIncomeFragment :
     BaseFragment<FragmentTransactionsBinding>(FragmentTransactionsBinding::inflate) {
 
-    private val incomeViewModel by viewModels<IncomeViewModel>()
+    private val incomeViewModel by activityViewModels<IncomeViewModel>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: TransactionRecycleViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycleView()
-
-        incomeViewModel.getCategories()
-
+        incomeViewModel.getData()
         initObservers()
     }
 
     private fun initObservers() {
-        incomeViewModel.categories.observe(viewLifecycleOwner) { categories ->
+        incomeViewModel.transactions.observe(viewLifecycleOwner) { categories ->
             viewAdapter.updateDataSet(categories.toTypedArray())
         }
 

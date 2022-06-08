@@ -1,6 +1,6 @@
 package com.endava.internship.mobile.budgetplanner.data.model
 
 data class IncomeTransactionsGeneralInfo(
-    val incomeCategories: IncomeTransactionsNumber,
+    val incomeCategories: Map<String, Long>,
     val sumIncomeCategories: Double
 )
