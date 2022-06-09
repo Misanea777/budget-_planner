@@ -58,7 +58,7 @@
     <string name="general_income_title">Income</string>
     <string name="dashboard_my_balance_title">Total amount</string>
     <string name="dashboard_sing_out_button">Sign out</string>
-    
+
     <string name="dashboard_transaction_expense_empty_title">You haven’t added any expenses\nfor this month yet.</string>
     <string name="dashboard_transaction_income_empty_title">You haven’t added any income\nfor this month yet.</string>
     <string name="add_transaction_expense_success_message_prefix">A new Expense of</string>
@@ -79,7 +79,7 @@
     <string name="add_transaction_amount_more_than_available_error">The amount can not be greater than the currently available amount of</string>
 
     <string name="add_transaction_date_picker_title">Pick a transaction date</string>
-    
+
     <string name="dashboard_balance_less_than_one_thousand_title">Less than 1k</string>
     <string name="dashboard_balance_one_thousand_title">1k</string>
     <string name="dashboard_balance_less_than_five_thousand_title">Less than 5k</string>

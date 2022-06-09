@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.ui.transaction
+package com.endava.internship.mobile.budgetplanner.ui.transaction.add
 
 import android.os.Bundle
 import android.view.LayoutInflater

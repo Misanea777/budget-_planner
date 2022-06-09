@@ -106,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/add_transaction_fragment"
-        android:name="com.endava.internship.mobile.budgetplanner.ui.transaction.AddTransactionFragment"
+        android:name="com.endava.internship.mobile.budgetplanner.ui.transaction.add.AddTransactionFragment"
         android:label="fragment_add_transaction"
         tools:layout="@layout/fragment_add_transaction" >
         <action

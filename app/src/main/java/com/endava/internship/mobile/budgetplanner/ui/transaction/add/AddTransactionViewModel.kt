@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.ui.transaction
+package com.endava.internship.mobile.budgetplanner.ui.transaction.add
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

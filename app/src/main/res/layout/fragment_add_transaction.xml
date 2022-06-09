@@ -2,12 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.transaction.AddTransactionFragment">
+    tools:context=".ui.transaction.add.AddTransactionFragment">
 
     <data>
         <variable
             name="viewModel"
-            type="com.endava.internship.mobile.budgetplanner.ui.transaction.AddTransactionViewModel" />
+            type="com.endava.internship.mobile.budgetplanner.ui.transaction.add.AddTransactionViewModel" />
     </data>
 
     <ScrollView

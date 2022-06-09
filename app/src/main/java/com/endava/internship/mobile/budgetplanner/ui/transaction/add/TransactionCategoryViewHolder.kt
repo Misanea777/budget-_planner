@@ -1,4 +1,4 @@
-package com.endava.internship.mobile.budgetplanner.ui.transaction
+package com.endava.internship.mobile.budgetplanner.ui.transaction.add
 
 import com.endava.internship.mobile.budgetplanner.databinding.LayoutChipChoiceBinding
 import com.google.android.material.chip.Chip
