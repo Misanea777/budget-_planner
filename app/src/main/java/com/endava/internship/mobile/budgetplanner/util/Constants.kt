@@ -21,8 +21,16 @@ object Constants {
         const val REGISTER_API_PATH: String = "registration"
         const val REGISTER_VALIDATE_PATH: String = "$REGISTER_API_PATH/validate"
 
+        const val AUTH_LOGIN_PATH: String = "auth/login"
+        const val AUTH_LOGOUT_PATH: String = "auth/logout"
+
+        const val BALANCE_CURRENT_AMOUNT_PATH: String = "dashboard/amount"
+
         const val TRANSACTION_EXPENSE_CATEGORY_PATH: String = "expense"
         const val TRANSACTION_INCOME_CATEGORY_PATH: String = "income"
+
+        const val ADD_TRANSACTION_INCOME_PATH: String = "transaction/income"
+        const val ADD_TRANSACTION_EXPENSE_PATH: String = "transaction/expense"
 
         const val EXPENSE_TRANSACTIONS_GENERAL_INFO_PATH = "dashboard/expense"
         const val INCOME_TRANSACTIONS_GENERAL_INFO_PATH = "dashboard/income"
