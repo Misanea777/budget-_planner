@@ -76,7 +76,7 @@ class DashboardFragment :
         dashboardViewModel.getCurrentBalance()
 
         dashboardViewModel.balance.observe(viewLifecycleOwner) { balance ->
-            binding.balanceText.text = balance.toMinimalisticNumberFormat()
+            binding.balanceText.text = balance.toMinimalisticNumberFormat(requireContext())
         }
     }
 

@@ -1,5 +1,6 @@
 package com.endava.internship.mobile.budgetplanner.util
 
+import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Patterns
@@ -9,6 +10,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.math.RoundingMode
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
@@ -18,6 +20,7 @@ import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
+import javax.inject.Inject
 import kotlin.math.floor
 import kotlin.math.roundToInt
 
@@ -71,12 +74,12 @@ fun Double.toFancyNumberFormat(): String = when(floor(this).toInt()) {
     else -> this.toString()
 }
 
-fun Double.toMinimalisticNumberFormat(): String = when(floor(this).toInt()) {
-    in 0..999 -> "Less than 1k"
-    in 1000..1000 -> "1k"
-    in 1001..4999 -> "Less than 5k"
-    in 5000..5000 -> "5k"
-    in 5001..Int.MAX_VALUE -> "More than 5k"
+fun Double.toMinimalisticNumberFormat(context: Context): String = when(floor(this).toInt()) {
+    in 0..999 -> context.getString(R.string.dashboard_balance_less_than_one_thousand_title)
+    in 1000..1000 -> context.getString(R.string.dashboard_balance_one_thousand_title)
+    in 1001..4999 -> context.getString(R.string.dashboard_balance_less_than_five_thousand_title)
+    in 5000..5000 -> context.getString(R.string.dashboard_balance_five_thousand_title)
+    in 5001..Int.MAX_VALUE -> context.getString(R.string.dashboard_balance_more_than_five_thousand_title)
     else -> Double.toString()
 }
 

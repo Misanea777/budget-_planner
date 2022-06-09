@@ -87,7 +87,7 @@ class AddTransactionViewModel @Inject constructor(
 
     fun updateExpensesRuleErrorMsg() {
         expensesRuleErrorMsg.value =
-            resourceProvider.getStringRes(R.string.add_transaction_amount_more_than_available_error) + balance.value?.toTwoDecimalPlaces()
+            "${resourceProvider.getStringRes(R.string.add_transaction_amount_more_than_available_error)} ${balance.value?.toTwoDecimalPlaces()}"
     }
 
     private fun validateForm(): Boolean {

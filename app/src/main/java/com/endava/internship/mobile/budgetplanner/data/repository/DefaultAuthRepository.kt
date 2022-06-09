@@ -13,7 +13,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 class DefaultAuthRepository (
     private val api: AuthApi,
-    private  val ioDispatcher: CoroutineDispatcher,
+    private val ioDispatcher: CoroutineDispatcher,
     private val userPreferences: UserPreferences,
     private val authorizationInterceptor: AuthorizationInterceptor
 ) : AuthRepository {

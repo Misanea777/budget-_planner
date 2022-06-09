@@ -76,7 +76,13 @@
 
     <string name="add_transaction_amount_less_then_permitted_error">The amount can not be less than 1.00.</string>
     <string name="add_transaction_amount_too_much_money_error">Woaah, too much money! Please spend something!</string>
-    <string name="add_transaction_amount_more_than_available_error">The amount can not be greater than the currently available amount of </string>
+    <string name="add_transaction_amount_more_than_available_error">The amount can not be greater than the currently available amount of</string>
 
     <string name="add_transaction_date_picker_title">Pick a transaction date</string>
+    
+    <string name="dashboard_balance_less_than_one_thousand_title">Less than 1k</string>
+    <string name="dashboard_balance_one_thousand_title">1k</string>
+    <string name="dashboard_balance_less_than_five_thousand_title">Less than 5k</string>
+    <string name="dashboard_balance_five_thousand_title">5k</string>
+    <string name="dashboard_balance_more_than_five_thousand_title">More than 5k</string>
 </resources>
