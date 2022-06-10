@@ -99,9 +99,8 @@ class NetworkModule {
         api: AuthApi,
         @IoDispatcher ioDispatcher: CoroutineDispatcher,
         userPreferences: UserPreferences,
-        authorizationInterceptor: AuthorizationInterceptor
     ): AuthRepository =
-        DefaultAuthRepository(api, ioDispatcher, userPreferences, authorizationInterceptor)
+        DefaultAuthRepository(api, ioDispatcher, userPreferences)
 
     @Singleton
     @Provides

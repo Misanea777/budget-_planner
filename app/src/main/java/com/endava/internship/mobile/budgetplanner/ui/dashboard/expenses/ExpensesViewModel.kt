@@ -43,8 +43,8 @@ class ExpensesViewModel @Inject constructor(
                 val transactions = response.value.expenseCategories
                 _transactions.value = categories?.filter { transactions.contains(it.name) }
                     ?.onEach { transactionModel ->
-                    transactions[transactionModel.name]?.let { transactionModel.numberOfTransactions = it}
-                }
+                        transactions[transactionModel.name]?.let { transactionModel.numberOfTransactions = it}
+                    }
             }
             is Resource.Failure -> pushStatusMessage(response.message)
         }

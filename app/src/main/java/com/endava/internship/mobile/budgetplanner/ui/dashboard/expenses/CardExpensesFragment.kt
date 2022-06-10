@@ -18,8 +18,10 @@ class CardExpensesFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         expensesViewModel.transactionsGeneralInfo.observe(viewLifecycleOwner) { transactionsGeneralInfo ->
+            val amount = transactionsGeneralInfo.sumExpenseCategories
+            binding.root.alpha = if(amount != 0.0)  1f else 0.2f
             binding.cardImage.findViewById<TextView>(R.id.card_image_text).text =
-                transactionsGeneralInfo.sumExpenseCategories.toFancyNumberFormat().asDollars().minusInFront()
+                amount.toFancyNumberFormat().asDollars().minusInFront()
         }
     }
 }

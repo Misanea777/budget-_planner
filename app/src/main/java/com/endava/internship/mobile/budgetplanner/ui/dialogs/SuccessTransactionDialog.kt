@@ -37,6 +37,7 @@ class SuccessTransactionDialog(
             onAddAnother.invoke()
         }
 
+        dialog.setCanceledOnTouchOutside(false)
         return dialog
     }
 
