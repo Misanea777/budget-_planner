@@ -6,11 +6,12 @@ import com.endava.internship.mobile.budgetplanner.databinding.TransactionCategor
 class TransactionViewHolder(private val binding: TransactionCategoryItemBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(model: TransactionModel) {
-            with(binding) {
-                iconImage.setImageResource(model.icon)
-                iconImage.background.colorFilter = model.getBackgroundColor()
-                titleText.text = model.name
-            }
+    fun bind(model: TransactionModel) {
+        with(binding) {
+            iconImage.setImageResource(model.icon)
+            iconImage.background.colorFilter = model.getBackgroundColor()
+            titleText.text = model.name
+            transactionsText.text = model.getNumberOfTransactions()
         }
+    }
 }

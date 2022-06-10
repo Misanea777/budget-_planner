@@ -8,8 +8,8 @@ import kotlinx.coroutines.CoroutineDispatcher
 
 class DefaultBalanceRepository (
     private val api: BalanceApi,
-    private  val ioDispatcher: CoroutineDispatcher
-    ) : BalanceRepository {
+    private val ioDispatcher: CoroutineDispatcher
+) : BalanceRepository {
 
     override suspend fun getCurrentBalance(): Resource<Balance> = safeApiCall(dispatcher = ioDispatcher) {
         api.getCurrentBalance()

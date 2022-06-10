@@ -38,7 +38,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_sign_in_button">sign in</string>
-    <string name="auth_sign_in_title">Access your\naccount</string>
+    <string name="auth_sign_in_title">Acces your\naccount</string>
     <string name="auth_sign_in_sign_up_button">sign up</string>
     <string name="auth_welcome_title">Welcome!</string>
     <string name="auth_welcome_text">Welcome to the Budget Planner. Use the \"Sign In\" button below to start planning your budget</string>
@@ -58,4 +58,31 @@
     <string name="general_income_title">Income</string>
     <string name="dashboard_my_balance_title">Total amount</string>
     <string name="dashboard_sing_out_button">Sign out</string>
+    
+    <string name="dashboard_transaction_expense_empty_title">You haven’t added any expenses\nfor this month yet.</string>
+    <string name="dashboard_transaction_income_empty_title">You haven’t added any income\nfor this month yet.</string>
+    <string name="add_transaction_expense_success_message_prefix">A new Expense of</string>
+    <string name="add_transaction_income_success_message_prefix">A new Income of</string>
+    <string name="add_transaction_success_message_suffix">has been added.</string>
+
+    <string name="add_transaction_success_dialog_title">Success</string>
+
+    <string name="add_transaction_category_error">The transaction should have a category selected.</string>
+    <string name="add_transaction_date_error">The date can not be empty.</string>
+
+    <string name="add_transaction_title_less_then_minimum_len_error">The title can not be less than 5 characters long.</string>
+    <string name="add_transaction_title_more_then_max_len_error">The title can not be more than 25 characters long.</string>
+    <string name="add_transaction_title_more_only_alpha_char_error">The title should contain only alpha characters.</string>
+
+    <string name="add_transaction_amount_less_then_permitted_error">The amount can not be less than 1.00.</string>
+    <string name="add_transaction_amount_too_much_money_error">Woaah, too much money! Please spend something!</string>
+    <string name="add_transaction_amount_more_than_available_error">The amount can not be greater than the currently available amount of</string>
+
+    <string name="add_transaction_date_picker_title">Pick a transaction date</string>
+    
+    <string name="dashboard_balance_less_than_one_thousand_title">Less than 1k</string>
+    <string name="dashboard_balance_one_thousand_title">1k</string>
+    <string name="dashboard_balance_less_than_five_thousand_title">Less than 5k</string>
+    <string name="dashboard_balance_five_thousand_title">5k</string>
+    <string name="dashboard_balance_more_than_five_thousand_title">More than 5k</string>
 </resources>

@@ -7,7 +7,7 @@ typealias Predicate = (value: String?) -> Boolean
 
 class LiveDataValidator(private val liveData: LiveData<String>) {
     private val validationRules = mutableListOf<Predicate>()
-    private val errorMessages = mutableListOf<String>()
+    private val errorMessages = mutableListOf< LiveData<String>>()
 
 
     var error = MutableLiveData<String?>()
@@ -15,7 +15,7 @@ class LiveDataValidator(private val liveData: LiveData<String>) {
     fun isValid(isEmitError: Boolean = true): Boolean {
         for (i in 0 until validationRules.size) {
             if (!validationRules[i](liveData.value)) {
-                if (isEmitError) emitErrorMessage(errorMessages[i])
+                if (isEmitError) emitErrorMessage(errorMessages[i].value)
                 return false
             }
         }
@@ -29,6 +29,13 @@ class LiveDataValidator(private val liveData: LiveData<String>) {
     }
 
     fun addRule(errorMsg: String, predicate: Predicate) {
+        val errMsgAsLiveData = MutableLiveData(errorMsg)
+        validationRules.add(predicate)
+        errorMessages.add(errMsgAsLiveData)
+    }
+
+    fun addRule(errorMsg: LiveData<String>, predicate: Predicate) {
+        println("here")
         validationRules.add(predicate)
         errorMessages.add(errorMsg)
     }

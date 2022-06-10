@@ -21,9 +21,9 @@ interface AuthApi {
     suspend fun validateUser(@Body baseUser: BaseUser): Unit
 
     @Headers("Content-Type: application/json")
-    @POST("auth/login")
+    @POST(Constants.ApiPaths.AUTH_LOGIN_PATH)
     suspend fun login(@Body baseUser: BaseUser): LoggedUser
 
-    @GET("auth/logout")
+    @GET(Constants.ApiPaths.AUTH_LOGOUT_PATH)
     suspend fun logout(): Unit
 }
