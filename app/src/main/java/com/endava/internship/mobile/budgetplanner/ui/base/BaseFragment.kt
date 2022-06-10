@@ -19,7 +19,7 @@ abstract class BaseFragment<VB: ViewBinding>(
     val binding: VB
         get() = _binding
 
-    protected val loadingRequestDialog = LoadingRequestDialog()
+    protected var loadingRequestDialog: LoadingRequestDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,10 +31,14 @@ abstract class BaseFragment<VB: ViewBinding>(
     }
 
     fun loadingDialogSetVisible(visible: Boolean) {
-        if (visible) loadingRequestDialog.show(
-            childFragmentManager,
-            Constants.DialogTags.SIGN_IN_LOADING
-        ) else loadingRequestDialog.dismiss()
+        childFragmentManager.executePendingTransactions()
+        if(loadingRequestDialog == null) loadingRequestDialog = LoadingRequestDialog()
+        loadingRequestDialog?.let {
+            if (!it.isAdded && visible) it.show(
+                childFragmentManager,
+                Constants.DialogTags.SIGN_IN_LOADING
+            ) else it.dismiss()
+        }
     }
 
     fun showErrorDialog(title: String, message: String) {

@@ -2,12 +2,14 @@ package com.endava.internship.mobile.budgetplanner.ui.dashboard.expenses
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentTransactionsBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
+import com.endava.internship.mobile.budgetplanner.ui.dashboard.DashboardFragmentDirections
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionRecycleViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,20 +17,18 @@ import dagger.hilt.android.AndroidEntryPoint
 class TransactionsExpensesFragment :
     BaseFragment<FragmentTransactionsBinding>(FragmentTransactionsBinding::inflate) {
 
-    private val expensesViewModel by viewModels<ExpensesViewModel>()
+    private val expensesViewModel by activityViewModels<ExpensesViewModel>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: TransactionRecycleViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycleView()
-
-        expensesViewModel.getCategories()
-
+        expensesViewModel.getData()
         initObservers()
     }
 
     private fun initObservers() {
-        expensesViewModel.categories.observe(viewLifecycleOwner) { categories ->
+        expensesViewModel.transactions.observe(viewLifecycleOwner) { categories ->
             viewAdapter.updateDataSet(categories.toTypedArray())
         }
 
@@ -40,6 +40,14 @@ class TransactionsExpensesFragment :
 
         expensesViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             loadingDialogSetVisible(isLoading)
+        }
+
+        binding.addTransactionButton.setOnClickListener {
+            findNavController().navigate(
+                DashboardFragmentDirections.actionDashboardFragmentToAddTransactionFragment(
+                    true
+                )
+            )
         }
     }
 

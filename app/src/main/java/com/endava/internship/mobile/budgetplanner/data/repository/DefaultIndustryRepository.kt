@@ -9,7 +9,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 class DefaultIndustryRepository (
     private val api: IndustryApi,
     private  val ioDispatcher: CoroutineDispatcher
-    ) : IndustryRepository {
+) : IndustryRepository {
 
     override suspend fun getIndustries(): Resource<IndustryResponse> =
         safeApiCall(dispatcher = ioDispatcher) {

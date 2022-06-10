@@ -100,5 +100,21 @@
         <action
             android:id="@+id/action_dashboard_fragment_to_login_fragment"
             app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_dashboard_fragment_to_add_transaction_fragment"
+            app:destination="@id/add_transaction_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/add_transaction_fragment"
+        android:name="com.endava.internship.mobile.budgetplanner.ui.transaction.AddTransactionFragment"
+        android:label="fragment_add_transaction"
+        tools:layout="@layout/fragment_add_transaction" >
+        <action
+            android:id="@+id/action_add_transaction_fragment_to_dashboard_fragment"
+            app:destination="@id/dashboard_fragment" />
+        <argument
+            android:name="isFromExpenses"
+            app:argType="boolean"
+            android:defaultValue="true" />
     </fragment>
 </navigation>
