@@ -115,13 +115,14 @@ class TransactionsListFragment :
     }
 
     private fun getYesNoDialog(onYes: () -> Unit) = YesNoDialog(
-        "Are you sure?",
-        "Once you delete it, it's gone forever.",
+        getString(R.string.yes_no_dialog_title),
+        getString(R.string.yes_no_dialog_message),
         onYes
     )
+
     private fun getSuccessfulDeletionDialog() = ErrorDialog(
-        "Operation succeed.",
-        "Transaction removed. Budget stats updated.",
-        "Close"
+        getString(R.string.success_delete_dialog_title),
+        getString(R.string.success_delete_dialog_message),
+        getString(R.string.success_delete_dialog_button),
     )
 }

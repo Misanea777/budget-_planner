@@ -59,7 +59,6 @@ class TransactionItemTouchHelper(private val context: Context) {
                     }
 
                     if (isCurrentlyActive) {
-                        //swipe with finger
                         var scrollOffset = currentScrollX + (-dX).toInt()
                         if (scrollOffset > limitScrollX) {
                             scrollOffset = limitScrollX
@@ -71,7 +70,6 @@ class TransactionItemTouchHelper(private val context: Context) {
                         viewHolder.itemView.scrollTo(scrollOffset, 0)
                     }
                     else {
-                        //swipe with auto animation
                         if (firstInActive) {
                             firstInActive = false
                             currentScrollXWhenInActive = viewHolder.itemView.scrollX

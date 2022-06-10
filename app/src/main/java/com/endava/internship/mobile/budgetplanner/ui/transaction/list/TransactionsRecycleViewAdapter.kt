@@ -37,5 +37,4 @@ class TransactionsRecycleViewAdapter : RecyclerView.Adapter<TransactionViewHolde
         dataSet.removeAt(position)
         notifyItemRemoved(position)
     }
-
 }

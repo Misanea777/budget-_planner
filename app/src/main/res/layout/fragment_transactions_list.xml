@@ -34,7 +34,6 @@
             android:layout_marginHorizontal="@dimen/default_margin"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sf_pro_text"
-            android:text="Food and drink"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_big"
             app:layout_constraintEnd_toEndOf="parent"
@@ -47,7 +46,6 @@
             android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_small"
-            android:text="$256.33"
             android:layout_marginStart="@dimen/default_margin"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/title_text"/>

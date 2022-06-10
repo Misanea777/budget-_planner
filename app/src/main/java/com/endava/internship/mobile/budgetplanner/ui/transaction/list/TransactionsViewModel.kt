@@ -37,7 +37,7 @@ class TransactionsViewModel @Inject constructor(
                 _transactionsInfo.value = response.value
                 if(updateCurrentTransactions) _transactions.value = response.value.transactions
             }
-            is Resource.Failure -> pushStatusMessage("Error")
+            is Resource.Failure -> pushStatusMessage(response.message)
         }
     }
 
@@ -45,7 +45,7 @@ class TransactionsViewModel @Inject constructor(
         val response = transactionRepository.deleteTransaction(id, isExpenses)
         when(response) {
             is Resource.Success -> _lastDeletedTransaction.value = id
-            else -> true
+            is Resource.Failure -> pushStatusMessage(response.message)
         }
     }
 }
