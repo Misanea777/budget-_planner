@@ -2,7 +2,6 @@ package com.endava.internship.mobile.budgetplanner.data.remote
 
 import com.endava.internship.mobile.budgetplanner.data.model.ExpenseTransaction
 import com.endava.internship.mobile.budgetplanner.data.model.IncomeTransaction
-import com.endava.internship.mobile.budgetplanner.data.model.IndustryResponse
 import com.endava.internship.mobile.budgetplanner.data.model.TransactionsCategory
 import com.endava.internship.mobile.budgetplanner.util.Constants
 import retrofit2.http.*
@@ -17,15 +16,15 @@ interface TransactionApi {
     @POST(Constants.ApiPaths.ADD_TRANSACTION_EXPENSE_PATH)
     suspend fun addExpenseTransaction(@Body transaction: ExpenseTransaction): ExpenseTransaction
 
-    @GET("dashboard/income/{category}")
+    @GET("${Constants.ApiPaths.INCOME_TRANSACTIONS_CATEGORY_PATH}/{category}")
     suspend fun getIncomeTransactionsCategory(@Path("category") category: String): TransactionsCategory
 
-    @GET("dashboard/expense/{category}")
+    @GET("${Constants.ApiPaths.EXPENSE_TRANSACTIONS_CATEGORY_PATH}/{category}")
     suspend fun getExpenseTransactionsCategory(@Path("category") category: String): TransactionsCategory
 
-    @DELETE("transaction/income/{id}")
+    @DELETE("${Constants.ApiPaths.TRANSACTION_INCOME_PATH}/{id}")
     suspend fun deleteIncomeTransaction(@Path("id") id: Int): Unit
 
-    @DELETE("transaction/expense/{id}")
+    @DELETE("${Constants.ApiPaths.TRANSACTION_EXPENSE_PATH}/{id}")
     suspend fun deleteExpenseTransaction(@Path("id") id: Int): Unit
 }

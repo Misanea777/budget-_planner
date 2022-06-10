@@ -9,11 +9,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class YesNoDialog(
     private val title: String,
-    var message: String,
+    private val message: String,
     private val onYes: () -> Unit,
     private val onNo: (() -> Unit)? = null
 ) : DialogFragment() {
-    lateinit var binding: DialogFragmentYesNoBinding
+    private lateinit var binding: DialogFragmentYesNoBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         binding = DialogFragmentYesNoBinding.inflate(layoutInflater)

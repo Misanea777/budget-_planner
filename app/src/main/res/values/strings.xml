@@ -86,12 +86,12 @@
     <string name="dashboard_balance_five_thousand_title">5k</string>
     <string name="dashboard_balance_more_than_five_thousand_title">More than 5k</string>
 
-    <string name="yes_no_dialog_title">Are you sure?</string>
-    <string name="yes_no_dialog_message">Once you delete it, it\'s gone forever.</string>
-
     <string name="success_delete_dialog_title">Operation succeed.</string>
     <string name="success_delete_dialog_message">Transaction removed. Budget stats updated.</string>
     <string name="success_delete_dialog_button">Close</string>
+
+    <string name="yes_no_dialog_title">Are you sure?</string>
+    <string name="yes_no_dialog_message">Once you delete it, it\'s gone forever.</string>
     <string name="yes_no_dialog_yes_button">Yes</string>
     <string name="yes_no_dialog_no_button">No</string>
 

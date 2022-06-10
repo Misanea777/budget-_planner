@@ -143,7 +143,7 @@ fun Calendar.oneYearAgoTime() = this.apply {
     this[Calendar.YEAR] = this[Calendar.YEAR] - 1
 }
 
-val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.GERMANY)
+val dateFormat = SimpleDateFormat("dd/MM/yyyy")
 
 fun Long.getDateFormatted(): String {
     val calendar = getCalendarInstanceFromUTC()
