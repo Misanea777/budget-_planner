@@ -6,7 +6,7 @@ import android.graphics.Color
 import com.endava.internship.mobile.budgetplanner.util.categoryExpensesIDToResourceID
 import com.endava.internship.mobile.budgetplanner.util.categoryIncomeIDToResourceID
 
-class TransactionModel(
+class TransactionCategoryModel(
     val id: Int,
     val name: String,
     private val color: String,
@@ -19,4 +19,6 @@ class TransactionModel(
     var numberOfTransactions: Long = 0
 
     fun getNumberOfTransactions() = "$numberOfTransactions transactions"
+
+    var onClick: (() -> Unit)? = null
 }

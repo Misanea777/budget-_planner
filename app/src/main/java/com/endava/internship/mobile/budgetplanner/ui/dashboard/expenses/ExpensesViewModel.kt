@@ -7,7 +7,7 @@ import com.endava.internship.mobile.budgetplanner.data.repository.TransactionCat
 import com.endava.internship.mobile.budgetplanner.network.Resource
 import com.endava.internship.mobile.budgetplanner.providers.ResourceProvider
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseViewModel
-import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionModel
+import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionCategoryModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -17,20 +17,20 @@ class ExpensesViewModel @Inject constructor(
     val resourceProvider: ResourceProvider
 ) : BaseViewModel(resourceProvider) {
 
-    private var categories: List<TransactionModel>? = null
+    private var categories: List<TransactionCategoryModel>? = null
 
     private val _transactionsGeneralInfo: MutableLiveData<ExpenseTransactionsGeneralInfo> =
         MutableLiveData()
     val transactionsGeneralInfo: LiveData<ExpenseTransactionsGeneralInfo> = _transactionsGeneralInfo
 
-    private val _transactions: MutableLiveData<List<TransactionModel>> = MutableLiveData()
-    val transactions: LiveData<List<TransactionModel>> = _transactions
+    private val _transactions: MutableLiveData<List<TransactionCategoryModel>> = MutableLiveData()
+    val transactions: LiveData<List<TransactionCategoryModel>> = _transactions
 
     private suspend fun getCategories() {
         val response = transactionCategoryRepository.getExpenseCategories()
         when (response) {
             is Resource.Success -> categories =
-                response.value.map { TransactionModel(it.id, it.name, it.color, true) }
+                response.value.map { TransactionCategoryModel(it.id, it.name, it.color, true) }
             is Resource.Failure -> pushStatusMessage(response.message)
         }
     }

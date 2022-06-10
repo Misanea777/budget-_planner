@@ -10,6 +10,7 @@
 
     <dimen name="text_size_extremely_tiny">13sp</dimen>
     <dimen name="text_size_tiny">16sp</dimen>
+    <dimen name="text_seize_smallish">18sp</dimen>
     <dimen name="text_size_small">20sp</dimen>
     <dimen name="text_size_medium_small">27sp</dimen>
     <dimen name="text_size_medium">30sp</dimen>
@@ -39,4 +40,6 @@
     <dimen name="dashboard_card_height">200dp</dimen>
     <dimen name="dashboard_card_margin_final_top">52dp</dimen>
     <dimen name="dashboard_card_margin_final_end">120dp</dimen>
+
+    <dimen name="recycle_view_item_margin">25dp</dimen>
 </resources>

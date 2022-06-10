@@ -10,7 +10,7 @@ import com.endava.internship.mobile.budgetplanner.R
 import com.endava.internship.mobile.budgetplanner.databinding.FragmentTransactionsBinding
 import com.endava.internship.mobile.budgetplanner.ui.base.BaseFragment
 import com.endava.internship.mobile.budgetplanner.ui.dashboard.DashboardFragmentDirections
-import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionRecycleViewAdapter
+import com.endava.internship.mobile.budgetplanner.ui.dashboard.transactions.TransactionsCategoryRecycleViewAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,7 +19,7 @@ class TransactionsExpensesFragment :
 
     private val expensesViewModel by activityViewModels<ExpensesViewModel>()
     private lateinit var recyclerView: RecyclerView
-    private lateinit var viewAdapter: TransactionRecycleViewAdapter
+    private lateinit var viewAdapter: TransactionsCategoryRecycleViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycleView()
@@ -29,6 +29,15 @@ class TransactionsExpensesFragment :
 
     private fun initObservers() {
         expensesViewModel.transactions.observe(viewLifecycleOwner) { categories ->
+            categories.forEach {
+                it.onClick = {
+                    findNavController().navigate(
+                        DashboardFragmentDirections.actionDashboardFragmentToTransactionsListFragment(
+                            it.name, true
+                        )
+                    )
+                }
+            }
             viewAdapter.updateDataSet(categories.toTypedArray())
         }
 
@@ -52,7 +61,7 @@ class TransactionsExpensesFragment :
     }
 
     private fun initRecycleView() {
-        viewAdapter = TransactionRecycleViewAdapter(emptyArray())
+        viewAdapter = TransactionsCategoryRecycleViewAdapter(emptyArray())
         recyclerView = binding.recycleView.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = viewAdapter

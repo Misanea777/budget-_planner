@@ -28,27 +28,40 @@
 
         <TextView
             android:id="@+id/title_text"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="@dimen/default_margin"
+            android:layout_marginHorizontal="@dimen/default_margin"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sf_pro_text"
-            android:text="Some text"
+            android:text="Food and drink"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_big"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/back_button" />
+
+        <TextView
+            android:id="@+id/month_amount_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_small"
+            android:text="$256.33"
+            android:layout_marginStart="@dimen/default_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:background="@android:color/transparent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/month_amount_text"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

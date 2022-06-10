@@ -2,27 +2,24 @@ package com.endava.internship.mobile.budgetplanner.util
 
 import android.content.Context
 import android.text.Editable
+import android.text.SpannableString
 import android.text.TextWatcher
+import android.text.style.RelativeSizeSpan
 import android.util.Patterns
 import androidx.core.view.children
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.endava.internship.mobile.budgetplanner.R
-import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.textfield.TextInputEditText
-import dagger.hilt.android.qualifiers.ApplicationContext
 import java.math.RoundingMode
 import java.text.DecimalFormat
-import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatterBuilder
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Pattern
-import javax.inject.Inject
 import kotlin.math.floor
-import kotlin.math.roundToInt
 
 fun String.isValidUsername() = Pattern.matches("^[A-Za-z0-9.@]{8,30}$", this)
 
@@ -34,9 +31,11 @@ fun String.containsOnlyAlphaCharAndSpaces() = Pattern.matches("^[A-Za-z ]+$", th
 
 fun String.isValidPassword() = Pattern.matches("^(?=.*[^A-Za-z0-9])(?=.*[a-zA-Z])(.{8,22})$", this)
 
-fun String.hasMinimumOneSpecialChar() = Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE).matcher(this).find()
+fun String.hasMinimumOneSpecialChar() =
+    Pattern.compile("[^a-z0-9 ]", Pattern.CASE_INSENSITIVE).matcher(this).find()
 
-fun String.hasMinimumOneAlphabeticChar() = Pattern.compile("[A-Za-z]", Pattern.CASE_INSENSITIVE).matcher(this).find()
+fun String.hasMinimumOneAlphabeticChar() =
+    Pattern.compile("[A-Za-z]", Pattern.CASE_INSENSITIVE).matcher(this).find()
 
 fun String.lenInRange(range: IntRange) = this.length in range
 
@@ -67,14 +66,14 @@ val formatter = DecimalFormat("##0.00").apply {
 
 fun Double.toTwoDecimalPlaces(): String = formatter.format(this)
 
-fun Double.toFancyNumberFormat(): String = when(floor(this).toInt()) {
+fun Double.toFancyNumberFormat(): String = when (floor(this).toInt()) {
     in 0..999 -> formatter.format(this)
     in 1000..999999 -> "${formatter.format(this / 1000)}k"
     in 1000000..Int.MAX_VALUE -> "${formatter.format(this / 1000000)}m"
     else -> this.toString()
 }
 
-fun Double.toMinimalisticNumberFormat(context: Context): String = when(floor(this).toInt()) {
+fun Double.toMinimalisticNumberFormat(context: Context): String = when (floor(this).toInt()) {
     in 0..999 -> context.getString(R.string.dashboard_balance_less_than_one_thousand_title)
     in 1000..1000 -> context.getString(R.string.dashboard_balance_one_thousand_title)
     in 1001..4999 -> context.getString(R.string.dashboard_balance_less_than_five_thousand_title)
@@ -111,18 +110,21 @@ fun categoryIncomeIDToResourceID(id: Int): Int {
 
 fun TextInputEditText.restrictWithoutSpaces() {
     this.addTextChangedListener(object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
         override fun afterTextChanged(p0: Editable?) {
             val textEntered = this@restrictWithoutSpaces.text.toString()
 
             if (textEntered.isNotEmpty() && textEntered.contains(" ")) {
-                this@restrictWithoutSpaces.setText(this@restrictWithoutSpaces.text.toString().replace(" ", ""));
+                this@restrictWithoutSpaces.setText(
+                    this@restrictWithoutSpaces.text.toString().replace(" ", "")
+                );
                 this@restrictWithoutSpaces.setSelection(this@restrictWithoutSpaces.text!!.length);
             }
-        }})
+        }
+    })
 }
 
 fun ChipGroup.setUncheckedChipsAlpha(checkedIds: List<Int>, alpha: Float) {
@@ -135,6 +137,7 @@ fun getCalendarInstanceFromUTC() = Calendar.getInstance(TimeZone.getTimeZone("UT
 fun Calendar.todayTime() = this.apply {
     timeInMillis = MaterialDatePicker.todayInUtcMilliseconds()
 }
+
 fun Calendar.oneYearAgoTime() = this.apply {
     todayTime()
     this[Calendar.YEAR] = this[Calendar.YEAR] - 1
@@ -148,8 +151,23 @@ fun Long.getDateFormatted(): String {
     return dateFormat.format(calendar.time)
 }
 
-fun String.getLongFromFormattedDate(): Long? = dateFormat.parse(this)?.time?.plus(TimeUnit.DAYS.toMillis(1))
+fun String.getLongFromFormattedDate(): Long? =
+    dateFormat.parse(this)?.time?.plus(TimeUnit.DAYS.toMillis(1))
 
-fun Boolean?.andOrNull(bool: Boolean?) = if(this != null && bool != null) this && bool else null
+fun dipToPx(dipValue: Float, context: Context) =
+    (dipValue * context.resources.displayMetrics.density).toInt()
 
-fun Boolean?.notOrNull() = if(this != null ) !this else null
+fun RecyclerView.attachItemTouchHelper(helper: ItemTouchHelper) {
+    helper.attachToRecyclerView(this)
+}
+
+fun SpannableString.toPrettyNumberFormat(): SpannableString {
+    return this.apply {
+        setSpan(
+            RelativeSizeSpan(0.75f),
+            this.toString().indexOf('.') + 1,
+            this.length,
+            0
+        )
+    }
+}

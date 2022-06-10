@@ -4,18 +4,21 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import com.endava.internship.mobile.budgetplanner.R
-import com.endava.internship.mobile.budgetplanner.databinding.DialogFragmentErrorBinding
+import com.endava.internship.mobile.budgetplanner.databinding.DialogFragmentYesNoBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-class ErrorDialog(private val title: String, val error: String, private val buttonText: String? = null) : DialogFragment() {
-
-    lateinit var binding: DialogFragmentErrorBinding
+class YesNoDialog(
+    private val title: String,
+    var message: String,
+    private val onYes: () -> Unit,
+    private val onNo: (() -> Unit)? = null
+) : DialogFragment() {
+    lateinit var binding: DialogFragmentYesNoBinding
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        binding = DialogFragmentErrorBinding.inflate(layoutInflater)
+        binding = DialogFragmentYesNoBinding.inflate(layoutInflater)
         binding.titleText.text = title
-        binding.errorText.text = error
-        buttonText?.let { binding.gotItButton.text = it }
+        binding.messageText.text = message
 
         val dialog = MaterialAlertDialogBuilder(
             requireActivity(),
@@ -24,8 +27,14 @@ class ErrorDialog(private val title: String, val error: String, private val butt
             setView(binding.root)
         }.create()
 
-        binding.gotItButton.setOnClickListener {
+        binding.yesButton.setOnClickListener {
             dialog.dismiss()
+            onYes.invoke()
+        }
+
+        binding.noButton.setOnClickListener {
+            dialog.dismiss()
+            onNo?.invoke()
         }
 
         return dialog

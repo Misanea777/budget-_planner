@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/quarter_transparent_black">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:background="@android:color/transparent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_tiny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_small"
+            android:background="@android:color/transparent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_extremely_tiny"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_text"
+            app:layout_constraintBottom_toTopOf="@+id/separator"/>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/grey"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/message_text" />
+
+        <Button
+            android:id="@+id/yes_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_size_small"
+            android:background="@android:color/transparent"
+            android:text="Yes"
+            android:textColor="@color/system_blue"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator" />
+
+        <View
+            android:id="@+id/button_separator"
+            android:layout_marginTop="@dimen/margin_small"
+            android:layout_width="match_parent"
+            android:backgroundTint="@color/grey"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/yes_button" />
+
+        <Button
+            android:id="@+id/no_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/text_size_small"
+            android:background="@android:color/transparent"
+            android:text="No"
+            android:textColor="@color/system_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/button_separator" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -29,5 +29,4 @@ class TransactionExpensesEmptyFragment : Fragment() {
         }
         return binding.root
     }
-
 }
